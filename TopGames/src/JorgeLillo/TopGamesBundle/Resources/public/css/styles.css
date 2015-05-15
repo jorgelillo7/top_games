@@ -1,0 +1,42 @@
+h2 {
+    // color: #7777ff;
+    text-shadow: 3px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.naranja {
+    color: #ff6600;
+}
+
+.rojo {
+    color: #ff0000;
+}
+
+.verde {
+    color: #00ff00;
+}
+
+/**
+ * Extra large button extensions. Extends `.btn`.
+ */
+.btn-xlarge {
+    padding: 1px 1px;
+    font-size: 18px;
+    line-height: normal;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+    }
+
+.jumbotron {
+      background-color: #CAC6C1;
+}
+
+.jumbotron h1 {
+      font-size: 80px;
+      letter-spacing: -1px;
+      line-height: 1;
+      // text-shadow: 4px 3px 0px #1d9d74, 9px 8px 0px rgba(0, 0, 0, 0.15);
+      //text-shadow: 4px 3px 2px rgba(0, 0, 0, 0.35);
+      text-shadow: 4px 3px 2px rgba(0, 0, 0, 0.25);
+      margin: 0 0 15px;
+}

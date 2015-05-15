@@ -1,0 +1,18 @@
+top_games_inicio:
+    path:     /
+    defaults: { _controller: TopGamesBundle:Default:index }
+
+login:
+    path:     /login
+    defaults: { _controller: TopGamesBundle:Security:login }
+
+login_check:
+    pattern:   /login_check
+#    methods:  [POST]
+
+logout:
+    path:     /logout
+    
+top_games_usuario:
+    resource: "@TopGamesBundle/Resources/config/routing/usuario.yml"
+    prefix:   /admin/usuario

@@ -1,0 +1,46 @@
+{% extends 'TopGamesBundle::layout.html.twig' %}
+
+{% block title %}{{ parent() }}Inicio{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <div class="jumbotron">
+      <h1>¡Bienvenido!</h1>
+      <p>Añadir buscador
+        
+      </p>
+      <p><a class="btn btn-primary btn-lg" href="" role="button">Buscar &raquo;</a></p>
+    </div>
+    
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+          <h2><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Lista random 1</h2>
+          <p>
+          </p>
+          <p><a class="btn btn-primary" href="" role="button">Detalles &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+          <h2><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Lista random 2</h2>
+          <p>
+          </p>
+          <p><a class="btn btn-primary" href="" role="button">Detalles &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+          <h2><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Lista Favorita</h2>
+          <p>
+          </p>
+          <p><a class="btn btn-primary" href="" role="button">Detalles&raquo;</a></p>
+        </div>
+      </div>
+
+      <hr>
+      <footer>
+        <p>&copy; [UPM] PFM Top Games 2015</p>
+      </footer>
+    </div> <!-- /container -->
+  </div>
+    
+  
+{% endblock content %}

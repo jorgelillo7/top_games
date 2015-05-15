@@ -1,0 +1,30 @@
+usuario:
+    path:     /
+    defaults: { _controller: "TopGamesBundle:Usuario:index" }
+
+usuario_show:
+    path:     /{id}/show
+    defaults: { _controller: "TopGamesBundle:Usuario:show" }
+
+usuario_new:
+    path:     /new
+    defaults: { _controller: "TopGamesBundle:Usuario:new" }
+
+usuario_create:
+    path:     /create
+    defaults: { _controller: "TopGamesBundle:Usuario:create" }
+    requirements: { _method: post }
+
+usuario_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "TopGamesBundle:Usuario:edit" }
+
+usuario_update:
+    path:     /{id}/update
+    defaults: { _controller: "TopGamesBundle:Usuario:update" }
+    requirements: { _method: post|put }
+
+usuario_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "TopGamesBundle:Usuario:delete" }
+    requirements: { _method: post|delete }

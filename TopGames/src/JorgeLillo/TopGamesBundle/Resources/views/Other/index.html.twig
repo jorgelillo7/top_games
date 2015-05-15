@@ -1,0 +1,105 @@
+{% extends 'TopGamesBundle::layout.html.twig' %}
+
+{% block title %}{{ parent() }}Inicio{% endblock title %}
+
+{% block content %}
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+<div class="container">
+    <h1>Más información</h1>
+    <div class="panel panel-default">
+ <div class="panel-heading">
+            <a class="lead" href='http://www.doctrine-project.org/projects/dbal.html' target='_blank'>Doctrine Database Abstraction Layer</a>
+        </div>
+        <div class="panel-body">
+            Doctrine es un mapeador de objetos-relacional (ORM) escrito en PHP que proporciona una capa de persistencia para objetos PHP. Es una capa de abstracción que se sitúa justo encima de un SGBD (sistema de gestión de bases de datos).
+            <p>
+            <p>
+            - Ejemplo de actualización de un registro de la base de datos:
+              <pre class="prettyprint">
+           $conn->update(
+            'usuarios',
+             array(     
+                 'email'=> 'NewEmail'
+                 ),
+             array(
+                 'username' => 'CurrentUsername'
+                 )
+          );
+            </pre> 
+            - Ejemplo de borrado:
+             <pre class="prettyprint">
+            $conn->delete(
+            'favorito', 
+            array(
+                'id' => $usuarioFavorito['idFavorito']
+                )
+            );
+             </pre>
+        </div>
+        
+        <div class="panel-heading">
+            <a class="lead" href='https://github.com/KnpLabs/KnpPaginatorBundle' target='_blank'>Knp Paginator</a>
+        </div>
+        <div class="panel-body">
+            <b> Ejemplo de uso: </b>
+            <li>
+                Controller
+            </li>
+            
+            <div>
+                <pre class="prettyprint">
+          public function listAction(Request $request)
+            {
+                $em    = $this->get('doctrine.orm.entity_manager');
+                $dql   = "SELECT a FROM AcmeMainBundle:Article a";
+                $query = $em->createQuery($dql);
+
+                $paginator  = $this->get('knp_paginator');
+                $pagination = $paginator->paginate(
+                    $query,
+                    $request->query->get('page', 1)/*page number*/,
+                    10/*limit per page*/
+                );
+
+                // parameters to template
+                return $this->render('AcmeMainBundle:Article:list.html.twig', array('pagination' => $pagination));
+            }
+                </pre> 
+       </div>
+            <li>
+                View:
+            </li>
+         
+            <div>
+                <pre class="prettyprint">
+                  For show pagination in view use the function knp_pagination_render
+                   knp_pagination_render ( pagination )
+                 </pre> 
+       </div>
+
+        </div>
+       
+        <div class="panel-heading">
+            <a class="lead" href='http://getbootstrap.com/' target='_blank' title='Bootstrap framework'>Bootstrap framework</a>
+        </div>
+        <div class="panel-body">
+
+            Twitter Bootstrap es un framework o conjunto de herramientas de software libre para diseño de sitios y aplicaciones web. Contiene plantillas de diseño con tipografía, formularios, botones, cuadros, menús de navegación y otros elementos de diseño basado en HTML y CSS, así como, extensiones de JavaScript opcionales adicionales.
+        </div>
+        <div class="panel-heading">
+            <p class="lead">Créditos</p>
+
+        </div>
+        <div class="panel-body">
+            <li>
+                Práctica realizada por: Jorge Lillo Cobacho
+            </li>
+            <li>
+                Máster Ingeniería Web 2014-2015, Universidad Politéctica de Madrid
+            </li>
+        </div>
+    </div>
+</div>
+    
+
+{% endblock content %}

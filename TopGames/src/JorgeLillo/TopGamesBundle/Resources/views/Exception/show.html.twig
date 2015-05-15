@@ -1,0 +1,13 @@
+{% extends 'TopGamesBundle::layout.html.twig' %}
+
+{% block title %}{{ parent() }}Inicio{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <div class="jumbotron">
+      <h1>¡Oooooops! ¡Se ha producido un error!</h1>
+      <p>El servidor ha devuelto el código de error <kbd>{{ status_code }}</kbd></p>
+      <p>El error se ha producido por: <kbd>{{ status_text }}</kbd></p>
+    </div> <!-- /jumbotron -->
+  </div>
+{% endblock content %}

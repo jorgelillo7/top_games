@@ -1,0 +1,76 @@
+{% extends 'TopGamesBundle::layout.html.twig' %}
+
+{% block title %} {{ parent()}} Mostrar usuario{% endblock title %}
+
+{% block content -%}
+  
+  {% if (entity.isAdmin == 1) %}
+    {% set admin = '<span class="glyphicon glyphicon-ok verde" aria-hidden="true"></span>' %}
+  {% else %}
+    {% set admin = '<span class="glyphicon glyphicon-ban-circle rojo" aria-hidden="true"></span>' %}
+  {% endif %}
+  {% if (entity.isActive == 1) %}
+    {% set activo = '<span class="glyphicon glyphicon-ok verde" aria-hidden="true"></span>' %}
+  {% else %}
+    {% set activo = '<span class="glyphicon glyphicon-ban-circle rojo" aria-hidden="true"></span>' %}
+  {% endif %}
+
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1>
+            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 
+            Usuario {{ entity.id }}: <small>"{{ entity.username }}"</small>
+        </h1>
+        <p class="lead">Mostrar datos del usuario:</p>
+      </div>
+      <div class="panel-body">
+        <table class="record_properties">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>Usuario</th>
+                    <td>{{ entity.username }}</td>
+                </tr>
+                <tr>
+                    <th>¿Admin?</th>
+                    <td>{{ admin | raw }}</td>
+                </tr>
+                <tr>
+                    <th>¿Activo?</th>
+                    <td>{{ activo | raw }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ entity.email }}</td>
+                </tr>
+                <tr>
+                    <th>Fecha de inserción</th>
+                    <td>{{ entity.createTime|date('Y-m-d H:i:s') }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="record_actions">
+          <tr>
+          <td>
+              <a title='Listado de Usuarios' href="{{ path('usuario') }}">
+                  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true">&nbsp;</span>
+              </a>
+          </td>
+          <td>
+              <a title='Modificar Usuario' href="{{ path('usuario_edit', { 'id': entity.id }) }}">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true">&nbsp;</span>
+              </a>
+          </td>
+          <td>{{ form(delete_form) }}</td>
+          </tr>
+        </table>
+
+      </div>
+    </div>
+  </div>
+{% endblock content %}
