@@ -1,0 +1,22 @@
+JorgeLillo\TopGamesBundle\Entity\Juego:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        titulo:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+        descripcion:
+            type: string
+            nullable: false
+            length: 1000
+            fixed: false
+       
+    lifecycleCallbacks: {  }

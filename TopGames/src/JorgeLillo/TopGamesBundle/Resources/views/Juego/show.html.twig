@@ -1,0 +1,39 @@
+{% extends 'TopGamesBundle::layout.html.twig' %}
+
+{% block title %} {{ parent()}} Mostrar juego{% endblock title %}
+
+{% block content -%}
+    <h1>Juego</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Titulo</th>
+                <td>{{ entity.titulo }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('juego') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('juego_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock  content %}
+

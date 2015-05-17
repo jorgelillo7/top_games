@@ -1,3 +1,7 @@
+top_games_juego:
+    resource: "@TopGamesBundle/Resources/config/routing/juego.yml"
+    prefix:   /juego
+
 top_games_inicio:
     path:     /
     defaults: { _controller: TopGamesBundle:Default:index }

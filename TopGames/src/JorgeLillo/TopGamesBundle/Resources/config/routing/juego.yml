@@ -1,0 +1,30 @@
+juego:
+    path:     /
+    defaults: { _controller: "TopGamesBundle:Juego:index" }
+
+juego_show:
+    path:     /{id}/show
+    defaults: { _controller: "TopGamesBundle:Juego:show" }
+
+juego_new:
+    path:     /new
+    defaults: { _controller: "TopGamesBundle:Juego:new" }
+
+juego_create:
+    path:     /create
+    defaults: { _controller: "TopGamesBundle:Juego:create" }
+    methods:  POST
+
+juego_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "TopGamesBundle:Juego:edit" }
+
+juego_update:
+    path:     /{id}/update
+    defaults: { _controller: "TopGamesBundle:Juego:update" }
+    methods:  [POST, PUT]
+
+juego_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "TopGamesBundle:Juego:delete" }
+    methods:  [POST, DELETE]
