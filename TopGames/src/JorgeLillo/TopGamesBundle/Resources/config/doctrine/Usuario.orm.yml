@@ -1,7 +1,6 @@
 JorgeLillo\TopGamesBundle\Entity\Usuario:
     type: entity
-    table: usuarios
-    repositoryClass: JorgeLillo\TopGamesBundle\Entity\UsuarioRepository
+    table: usuario
     uniqueConstraints:
         username_UNIQUE:
             columns:
@@ -23,7 +22,7 @@ JorgeLillo\TopGamesBundle\Entity\Usuario:
         password:
             type: string
             nullable: false
-            length: 64
+            length: 255
             fixed: false
         isAdmin:
             type: boolean
@@ -31,12 +30,6 @@ JorgeLillo\TopGamesBundle\Entity\Usuario:
             unsigned: false
             default: false
             column: esAdmin
-        isActive:
-            type: boolean
-            nullable: true
-            unsigned: false
-            default: true
-            column: esActivo
         email:
             type: string
             nullable: true
@@ -47,5 +40,10 @@ JorgeLillo\TopGamesBundle\Entity\Usuario:
             nullable: true
             default: CURRENT_TIMESTAMP
             column: create_time
-
+        isActive:
+            type: boolean
+            nullable: true
+            unsigned: false
+            default: true
+            column: esActivo
     lifecycleCallbacks: {  }

@@ -19,6 +19,14 @@
                 <th>Descripcion</th>
                 <td>{{ entity.descripcion }}</td>
             </tr>
+            <tr>
+                <th>Path</th>
+                <td>{{ entity.path }}</td>
+            </tr>
+            <tr>
+        <img src="{{asset(entity.getWebPath)}}" alt="Portada" height="200" width="200" />
+            
+            </tr>
         </tbody>
     </table>
 

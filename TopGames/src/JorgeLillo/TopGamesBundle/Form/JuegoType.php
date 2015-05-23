@@ -17,6 +17,7 @@ class JuegoType extends AbstractType
         $builder
             ->add('titulo')
             ->add('descripcion')
+            ->add('file', 'file')
         ;
     }
     
@@ -26,7 +27,8 @@ class JuegoType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'JorgeLillo\TopGamesBundle\Entity\Juego'
+            'data_class' => 'JorgeLillo\TopGamesBundle\Entity\Juego',
+            'required' => false,
         ));
     }
 

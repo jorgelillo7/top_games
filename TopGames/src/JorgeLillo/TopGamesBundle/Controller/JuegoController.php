@@ -35,12 +35,13 @@ class JuegoController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Juego();
+        $entity = new Juego(); 
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-
+        
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $entity->upload();
             $em->persist($entity);
             $em->flush();
 
@@ -170,6 +171,7 @@ class JuegoController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $entity->upload();
             $em->flush();
 
             return $this->redirect($this->generateUrl('juego_edit', array('id' => $id)));

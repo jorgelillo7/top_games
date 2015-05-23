@@ -18,5 +18,10 @@ JorgeLillo\TopGamesBundle\Entity\Juego:
             nullable: false
             length: 1000
             fixed: false
+        path:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false 
        
     lifecycleCallbacks: {  }
