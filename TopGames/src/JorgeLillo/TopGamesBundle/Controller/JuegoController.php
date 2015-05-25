@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use JorgeLillo\TopGamesBundle\Entity\Juego;
+use JorgeLillo\TopGamesBundle\Entity\JuegoPlataforma;
 use JorgeLillo\TopGamesBundle\Form\JuegoType;
 
 /**
@@ -24,6 +25,10 @@ class JuegoController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('TopGamesBundle:Juego')->findAll();
+        
+        foreach ($entities as $juego){
+            $juego->setListaPlataformas($this->getListaPlataformas($juego->getId()));
+        }
 
         return $this->render('TopGamesBundle:Juego:index.html.twig', array(
             'entities' => $entities,
@@ -101,11 +106,15 @@ class JuegoController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Juego entity.');
         }
+        
+         $listaPlataformas = $this->getListaPlataformas($entity->getId());
+            
 
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('TopGamesBundle:Juego:show.html.twig', array(
             'entity'      => $entity,
+            'listaPlataformas' => $listaPlataformas,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -126,7 +135,7 @@ class JuegoController extends Controller
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
-
+        
         return $this->render('TopGamesBundle:Juego:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -222,5 +231,93 @@ class JuegoController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    } 
+    
+    
+    public function juegoPlataformasAction($id){
+         $em = $this->getDoctrine()->getManager();
+        $idJuego = $id;
+        $plataformasAsociadas = $this->getListaPlataformas($idJuego);
+        
+        $plataformasTotales = $em->getRepository('TopGamesBundle:Plataforma')->findAll();
+        
+         $listaPlataformasSinDuplicados = array();
+           foreach ($plataformasTotales as $plataformaLista){
+               $yaAsociado = false;
+                foreach ($plataformasAsociadas as $plataformaAsociada){
+                    if($plataformaLista->getId() == $plataformaAsociada->getId()){
+                        $yaAsociado = true;
+                    }
+                }
+                 
+               if($yaAsociado == false){
+                   array_push($listaPlataformasSinDuplicados, $plataformaLista);
+               }
+                
+            }
+            
+
+        return $this->render('TopGamesBundle:Juego:gestionplataformas.html.twig', array(
+            'idJuego' => $idJuego,
+            'plataformas' => $listaPlataformasSinDuplicados,
+            'plataformasAsociadas' => $plataformasAsociadas
+        ));
+    }
+    
+     public function plataforma_saveAction ($idJuego , $idPlataforma){
+          
+            $em = $this->getDoctrine()->getManager();
+            
+            $juego = $em->getRepository('TopGamesBundle:Juego')->find($idJuego);
+             
+            $juegoPlataforma = new JuegoPlataforma();
+            $juegoPlataforma->setIdJuego($juego->getId());
+            $juegoPlataforma->setIdPlataforma($idPlataforma);
+            $em->persist($juegoPlataforma);
+            $em->flush();
+         
+        
+           return $this->redirect($this->generateUrl('juego_show', array('id' => $idJuego)));
+    
+        
+    }
+    
+     public function plataforma_deleteAction ($idJuego,$idPlataforma){
+          
+            $em = $this->getDoctrine()->getManager();
+            
+            $sql = 'SELECT jp.id '
+                    . 'FROM juego_plataforma AS jp '
+                    . 'WHERE jp.id_juego= ' . $idJuego . ' AND jp.id_plataforma = ' . $idPlataforma;
+                    
+            $statement = $em->getConnection()->prepare($sql);
+            $statement->execute();
+            $juegoplataformaId = $statement->fetchAll();
+            $sqlDeletePlataforma = 'DELETE FROM juego_plataforma WHERE ID = '. $juegoplataformaId[0]['id'];
+            $statement2 = $em->getConnection()->prepare($sqlDeletePlataforma);
+            $statement2->execute();
+          
+           return $this->redirect($this->generateUrl('juego_show', array('id' => $idJuego)));
+    
+    }
+    
+    public function getListaPlataformas ($id){
+         $em = $this->getDoctrine()->getManager();
+         $idJuego = $id; 
+            $sql = 'SELECT plat.id '
+                    . 'FROM plataforma AS plat '
+                    . 'INNER JOIN juego_plataforma AS jp ON plat.id = jp.id_plataforma '
+                    . 'AND jp.id_juego = ' . $idJuego; 
+            $statement = $em->getConnection()->prepare($sql);
+            $statement->execute();
+            $plataformasId = $statement->fetchAll();
+            
+            $listaPlataformas = array();
+           foreach ($plataformasId as $valor){
+                $plataforma = $em->getRepository('TopGamesBundle:Plataforma')->find($valor);
+                array_push($listaPlataformas, $plataforma);
+            }
+            
+            return $listaPlataformas;
     }
 }

@@ -1,0 +1,31 @@
+{% extends 'TopGamesBundle::layout.html.twig' %}
+
+
+{% block title %} {{ parent()}} Alta de plataformas a juegos{% endblock title %}
+
+{% block content -%}
+    <h1>Gestión plataformas</h1>
+        
+     {% for plataforma in plataformasAsociadas %}
+        <li> {{plataforma.nombre}}</li>
+        <a href="{{ path("juego_plataformas_borrar", {'idJuego': idJuego, 'idPlataforma': plataforma.id}) }}">
+                      <span class="glyphicon glyphicon-star" aria-hidden="true" title="Añadir Plataforma"></span>
+        </a>
+    {% endfor %}
+    
+     {% for plataforma in plataformas %}
+        <li> {{plataforma.nombre}}</li>
+        <a href="{{ path("juego_plataformas_nuevo", {'idJuego': idJuego, 'idPlataforma': plataforma.id}) }}">
+                      <span class="glyphicon glyphicon-star-empty" aria-hidden="true" title="Añadir Plataforma"></span>
+        </a>
+    {% endfor %}
+         
+        
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('juego') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock content %}

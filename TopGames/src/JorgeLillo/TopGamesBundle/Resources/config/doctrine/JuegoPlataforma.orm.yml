@@ -1,0 +1,26 @@
+JorgeLillo\TopGamesBundle\Entity\JuegoPlataforma:
+    type: entity
+    table: juego_plataforma
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        idJuego:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            column: id_juego
+        idPlataforma:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            column: id_plataforma
+    lifecycleCallbacks: {  }

@@ -23,6 +23,18 @@
                 <th>Path</th>
                 <td>{{ entity.path }}</td>
             </tr>
+             <tr>
+                <th>Plataformas</th>
+                <td> 
+                {% for platafora in listaPlataformas %}
+                      {% if platafora.letraBlanca == true %}
+                            <li><b style="color: white;border-radius: 4px; background-color: {{ platafora.color }}">{{ platafora.nombre }}</b></li>
+                        {% else %}
+                            <li><b style="border-radius: 4px; background-color: {{ platafora.color }}">{{ platafora.nombre }}</b></li>
+                        {% endif %}
+                {% endfor %}
+                </td>
+            </tr>
             <tr>
         <img src="{{asset(entity.getWebPath)}}" alt="Portada" height="200" width="200" />
             

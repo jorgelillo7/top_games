@@ -37,6 +37,8 @@ class Juego {
      * @var string descripcion
      */
     private $descripcion;
+    
+    public $listaPlataformas;
 
     public function getAbsolutePath() {
         return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
@@ -127,6 +129,12 @@ class Juego {
         return $this->descripcion;
     }
 
+    public function setListaPlataformas($listaPlataformas) {
+        $this->listaPlataformas = $listaPlataformas;
+
+        return $this;
+    }
+
     public function upload() {
         // the file property can be empty if the field is not required
         if (null === $this->getFile()) {
@@ -148,15 +156,13 @@ class Juego {
         $this->file = null;
     }
 
-
     /**
      * Set path
      *
      * @param string $path
      * @return Juego
      */
-    public function setPath($path)
-    {
+    public function setPath($path) {
         $this->path = $path;
 
         return $this;
@@ -167,8 +173,8 @@ class Juego {
      *
      * @return string 
      */
-    public function getPath()
-    {
+    public function getPath() {
         return $this->path;
     }
+
 }

@@ -23,7 +23,20 @@ juego_update:
     path:     /{id}/update
     defaults: { _controller: "TopGamesBundle:Juego:update" }
     methods:  [POST, PUT]
+    
+juego_plataformas:
+    path:     /{id}/juego-plataformas
+    defaults: { _controller: "TopGamesBundle:Juego:juegoPlataformas" }
 
+juego_plataformas_nuevo: 
+    path:     /addPlataforma/{idJuego}/{idPlataforma}
+    defaults: { _controller: "TopGamesBundle:Juego:plataforma_save" }
+    
+juego_plataformas_borrar: 
+    path:     /removePlataforma/{idJuego}/{idPlataforma}
+    defaults: { _controller: "TopGamesBundle:Juego:plataforma_delete" }
+    
+    
 juego_delete:
     path:     /{id}/delete
     defaults: { _controller: "TopGamesBundle:Juego:delete" }
