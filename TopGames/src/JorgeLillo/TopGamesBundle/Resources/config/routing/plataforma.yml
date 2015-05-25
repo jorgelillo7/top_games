@@ -1,0 +1,30 @@
+plataforma:
+    path:     /
+    defaults: { _controller: "TopGamesBundle:Plataforma:index" }
+
+plataforma_show:
+    path:     /{id}/show
+    defaults: { _controller: "TopGamesBundle:Plataforma:show" }
+
+plataforma_new:
+    path:     /new
+    defaults: { _controller: "TopGamesBundle:Plataforma:new" }
+
+plataforma_create:
+    path:     /create
+    defaults: { _controller: "TopGamesBundle:Plataforma:create" }
+    methods:  POST
+
+plataforma_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "TopGamesBundle:Plataforma:edit" }
+
+plataforma_update:
+    path:     /{id}/update
+    defaults: { _controller: "TopGamesBundle:Plataforma:update" }
+    methods:  [POST, PUT]
+
+plataforma_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "TopGamesBundle:Plataforma:delete" }
+    methods:  [POST, DELETE]

@@ -1,0 +1,18 @@
+{% extends 'TopGamesBundle::layout.html.twig' %}
+
+
+{% block title %} {{ parent()}} Alta de usuarios{% endblock title %}
+
+{% block content -%}
+    <h1>Plataforma creation</h1>
+
+    {{ form(form) }}
+      
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('plataforma') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock content %}

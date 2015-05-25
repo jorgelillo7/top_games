@@ -1,0 +1,37 @@
+{% extends 'TopGamesBundle::layout.html.twig' %}
+
+{% block title %} {{ parent()}} Mostrar plataforma{% endblock title %}
+{% block content -%}
+    <h1>Plataforma</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Color</th>
+                <td>{{ entity.color }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('plataforma') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('plataforma_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock content %}

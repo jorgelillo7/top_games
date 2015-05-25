@@ -8,7 +8,7 @@
     <table class="records_list">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Portada</th>
                 <th>Titulo</th>
                 <th>Descripcion</th>
                 <th>Actions</th>
@@ -17,7 +17,7 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('juego_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td> <img src="{{asset(entity.getWebPath)}}" alt="Portada" height="150" width="150" /></td>
                 <td>{{ entity.titulo }}</td>
                 <td>{{ entity.descripcion }}</td>
                 <td>

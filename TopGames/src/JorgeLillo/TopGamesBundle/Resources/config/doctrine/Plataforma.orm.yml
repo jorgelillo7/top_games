@@ -1,0 +1,31 @@
+JorgeLillo\TopGamesBundle\Entity\Plataforma:
+    type: entity
+    table: plataforma
+    id:
+        id:
+            type: bigint
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            comment: ''
+        color:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            comment: ''
+        letraBlanca:
+            type: boolean
+            nullable: true
+            comment: ''
+            column: letra_blanca
+    lifecycleCallbacks: {  }
