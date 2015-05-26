@@ -1,5 +1,5 @@
-informacion:
-    path:     /mas_informacion
-    defaults: { _controller: TopGamesBundle:Other:index }
-    methods:  [GET]
-    
+buscar:
+    path:     /buscar
+    defaults: {_controller: TopGamesBundle:Default:buscar}
+    methods:  [POST]
+

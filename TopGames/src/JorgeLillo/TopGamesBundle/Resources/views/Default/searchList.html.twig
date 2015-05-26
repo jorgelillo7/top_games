@@ -1,0 +1,68 @@
+{% extends 'TopGamesBundle::layout.html.twig' %}
+
+{% block title %} {{ parent()}} Listado de Juegos{% endblock title %}
+
+{% block content -%}
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1>
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
+            <small>Resultado de la búsqueda "<kbd style="background-color: rgb(116, 120, 210);">{{ cadena }}</kbd>"</small>
+        </h1>
+      </div>
+      <div class="panel-body">
+          <div class="table-responsive">
+            {% if (entities | length) > 0 %}
+              {# Hay juegos #}
+              <div class="panel panel-default">
+                  
+               {# display navigation #}
+                <div class="navigation">
+                    {{ knp_pagination_render(entities) }}
+                </div>   
+              <table class="table table-striped table-condensed">
+                {% for entity in entities %} 
+                    <tr>
+                      <td>
+                        <a href='{{ path('juego_show', { 'id': entity.id }) }}'>
+                           <img src="{{asset(entity.getWebPath)}}" alt="Portada" height="100" width="100" />
+                        </a>
+                      </td>
+                      <td><h2>{{ entity.titulo }}</h2></td>
+                      <td>
+                            {% for plataforma in entity.listaPlataformas %}
+                                {% if plataforma.letraBlanca == true %}
+                                      <li><b style="color: white;border-radius: 4px; background-color: {{ plataforma.color }}">{{ plataforma.nombre }}</b></li>
+                                  {% else %}
+                                      <li><b style="border-radius: 4px; background-color: {{ plataforma.color }}">{{ plataforma.nombre }}</b></li>
+                                  {% endif %}
+                            {% endfor %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  </table>
+                  <div class="count">
+                     Total elementos: {{ entities.getTotalItemCount }}
+                  </div>
+                  
+                </div>
+            {% else %}
+                <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                  <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Cerrar</span>
+                  </button>
+                  <h4>¡No se han encontrado resultados!</h4>
+                </div>
+                <p>
+                  <a href="{{ path('top_games_inicio') }}">
+                    <button type="button" class="btn btn-primary btn-lg">Nueva Búsqueda</button>
+                  </a>
+                </p>
+          {% endif %}
+          </div>
+      </div>
+    </div>
+  </div>
+{% endblock content -%}

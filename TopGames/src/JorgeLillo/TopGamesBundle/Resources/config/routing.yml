@@ -5,6 +5,10 @@ top_games_juego:
 top_games_plataforma:
     resource: "@TopGamesBundle/Resources/config/routing/plataforma.yml"
     prefix:   /plataforma
+    
+top_games_others:
+    resource: "@TopGamesBundle/Resources/config/routing/other.yml"
+    prefix:   /home
 
 top_games_inicio:
     path:     /
