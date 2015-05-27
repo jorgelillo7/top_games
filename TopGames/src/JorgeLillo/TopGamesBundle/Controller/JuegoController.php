@@ -108,13 +108,21 @@ class JuegoController extends Controller
         }
         
          $listaPlataformas = $this->getListaPlataformas($entity->getId());
-            
+         
+         $usuarioId = $this->get('security.context')->getToken()->getUser()->getId();
+         $repository = $em->getRepository('TopGamesBundle:Lista');
+         $query = $repository->createQueryBuilder('l')
+               ->where('l.idUsuario = :word')
+               ->setParameter('word', $usuarioId)
+               ->getQuery();
+         $misListas = $query->getResult();
 
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('TopGamesBundle:Juego:show.html.twig', array(
             'entity'      => $entity,
             'listaPlataformas' => $listaPlataformas,
+            'misListas' => $misListas,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -319,5 +327,26 @@ class JuegoController extends Controller
             }
             
             return $listaPlataformas;
+    }
+    
+    public function addToListAction (Request $request){
+           $idJuego = $request->get('idJuego');
+            $idLista = $request->get('idList');
+        var_dump($idJuego);
+        var_dump($idLista);
+            $em = $this->getDoctrine()->getManager();
+            
+           /* $juego = $em->getRepository('TopGamesBundle:Juego')->find($idJuego);
+             
+            $juegoPlataforma = new JuegoPlataforma();
+            $juegoPlataforma->setIdJuego($juego->getId());
+            $juegoPlataforma->setIdPlataforma($idPlataforma);
+            $em->persist($juegoPlataforma);
+            $em->flush();
+         */
+        
+           return $this->redirect($this->generateUrl('lista_show', array('id' => $idLista)));
+    
+        
     }
 }

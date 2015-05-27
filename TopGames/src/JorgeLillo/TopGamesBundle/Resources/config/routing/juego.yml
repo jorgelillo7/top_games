@@ -41,3 +41,8 @@ juego_delete:
     path:     /{id}/delete
     defaults: { _controller: "TopGamesBundle:Juego:delete" }
     methods:  [POST, DELETE]
+    
+juego_add_to_list:
+    path:     /addToList
+    defaults: {_controller: TopGamesBundle:Juego:addToList}
+    methods:  [POST]

@@ -41,6 +41,23 @@
             </tr>
         </tbody>
     </table>
+    
+      <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form role="form" class="form-horizontal" method='post' action='{{ path('juego_add_to_list') }}'>
+          <div class="form-group">
+            <input id="idJuego" name="idJuego" type="hidden" value="{{ entity.id }}">
+            <label for="idList" class="col-sm-2 control-label">Añadir a lista:</label>
+            <select id="idList" name="idList"> {% for lista in misListas %} <option value="{{ lista.id }}"> {{ lista.nombre }} </option> {% endfor %}</select>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="col-sm-offset-2 col-sm-2 btn btn-primary">Añadir a lista</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
         <ul class="record_actions">
     <li>
