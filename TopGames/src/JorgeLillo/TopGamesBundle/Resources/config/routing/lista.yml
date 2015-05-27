@@ -1,0 +1,34 @@
+lista:
+    path:     /
+    defaults: { _controller: "TopGamesBundle:Lista:index" }
+    
+lista_gestion:
+    path:     /admin
+    defaults: { _controller: "TopGamesBundle:Lista:indexAdmin" }
+
+lista_show:
+    path:     /{id}/show
+    defaults: { _controller: "TopGamesBundle:Lista:show" }
+
+lista_new:
+    path:     /new
+    defaults: { _controller: "TopGamesBundle:Lista:new" }
+
+lista_create:
+    path:     /create
+    defaults: { _controller: "TopGamesBundle:Lista:create" }
+    methods:  POST
+
+lista_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "TopGamesBundle:Lista:edit" }
+
+lista_update:
+    path:     /{id}/update
+    defaults: { _controller: "TopGamesBundle:Lista:update" }
+    methods:  [POST, PUT]
+
+lista_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "TopGamesBundle:Lista:delete" }
+    methods:  [POST, DELETE]

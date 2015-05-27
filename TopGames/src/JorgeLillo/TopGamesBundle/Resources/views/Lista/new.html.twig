@@ -1,0 +1,18 @@
+{% extends 'TopGamesBundle::layout.html.twig' %}
+
+
+{% block title %} {{ parent()}} Nueva lista{% endblock title %}
+
+{% block content -%}
+    <h1>Lista creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('lista') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

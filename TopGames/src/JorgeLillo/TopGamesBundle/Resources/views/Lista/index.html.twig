@@ -1,0 +1,49 @@
+{% extends 'TopGamesBundle::layout.html.twig' %}
+
+{% block title %} {{ parent()}} Mis listas{% endblock title %}
+
+{% block content -%}
+    <h1>Lista list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Autororiginal</th>
+                <th>Idusuario</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('lista_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.nombre }}</td>
+                <td>{{ entity.descripcion }}</td>
+                <td>{{ entity.autorOriginal }}</td>
+                <td>{{ entity.idUsuario }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('lista_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('lista_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('lista_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock content%}

@@ -1,0 +1,39 @@
+JorgeLillo\TopGamesBundle\Entity\Lista:
+    type: entity
+    table: lista
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            comment: ''
+        descripcion:
+            type: string
+            nullable: false
+            length: 500
+            fixed: false
+            comment: ''
+        autorOriginal:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            comment: ''
+            column: autor_original
+        idUsuario:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            column: id_usuario
+    lifecycleCallbacks: {  }

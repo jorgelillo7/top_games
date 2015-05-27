@@ -1,0 +1,45 @@
+{% extends 'TopGamesBundle::layout.html.twig' %}
+
+{% block title %} {{ parent()}} Detalles lista{% endblock title %}
+{% block content -%}
+    <h1>Lista</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Autororiginal</th>
+                <td>{{ entity.autorOriginal }}</td>
+            </tr>
+            <tr>
+                <th>Idusuario</th>
+                <td>{{ entity.idUsuario }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('lista') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('lista_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock content %}

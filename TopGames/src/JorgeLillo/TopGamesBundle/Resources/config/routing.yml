@@ -1,3 +1,7 @@
+top_games_lista:
+    resource: "@TopGamesBundle/Resources/config/routing/lista.yml"
+    prefix:   /lista
+
 top_games_juego:
     resource: "@TopGamesBundle/Resources/config/routing/juego.yml"
     prefix:   /juego
