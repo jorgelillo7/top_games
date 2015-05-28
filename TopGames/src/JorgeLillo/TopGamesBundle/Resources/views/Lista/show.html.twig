@@ -28,6 +28,41 @@
             </tr>
         </tbody>
     </table>
+    Listado de juegos: (Elementos: {{juegosAsociados|length}})
+    {% if juegosAsociados|length > 0 %}
+        <table class="record_properties">
+               <tbody>
+               <thead>
+                    <th></th>
+                    <th>Id </th>
+                    <th>Título </th>
+                    <th>Plataformas</th>
+                    <th></th>
+               </thead>
+                 {% for juego in juegosAsociados %}
+                        <tr>
+                            <td> <img src="{{asset(juego.getWebPath)}}" alt="Portada" height="200" width="200" />
+                        <td>{{ juego.id }}</td>
+                        <td>{{ juego.titulo }}</td>
+                        <td> 
+                       {% for platafora in juego.listaPlataformas %}
+                             {% if platafora.letraBlanca == true %}
+                                   <li><b style="color: white;border-radius: 4px; background-color: {{ platafora.color }}">{{ platafora.nombre }}</b></li>
+                               {% else %}
+                                   <li><b style="border-radius: 4px; background-color: {{ platafora.color }}">{{ platafora.nombre }}</b></li>
+                               {% endif %}
+                       {% endfor %}
+                       </td>
+                       <td>
+                                <a href="{{ path('lista_juego_remove', { 'idJuego': juego.id ,'idLista': entity.id}) }}">eliminar juego</a>
+                       </td>
+                   </tr>
+                  {% endfor %}
+       </table>
+        {% else %}
+            <br>Sin juegos asociados   
+     {% endif %}
+                   
 
         <ul class="record_actions">
     <li>

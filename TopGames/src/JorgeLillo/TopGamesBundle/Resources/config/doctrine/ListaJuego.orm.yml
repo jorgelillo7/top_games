@@ -1,0 +1,26 @@
+JorgeLillo\TopGamesBundle\Entity\ListaJuego:
+    type: entity
+    table: lista_juego
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        idLista:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            column: id_lista
+        idJuego:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            column: id_juego
+    lifecycleCallbacks: {  }

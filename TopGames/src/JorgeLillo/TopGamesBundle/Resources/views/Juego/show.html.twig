@@ -5,26 +5,27 @@
 {% block content -%}
     <h1>Juego</h1>
 
+       {% if error == -1 %}
+    <b>Juego ya en la lista seleccionada</b>
+      {% endif %}
     <table class="record_properties">
+        <thead>
+             <th></th>
+             <th>Id</th>
+             <th>Titulo</th>
+             <th>Descripcion</th>
+             <th>Path</th>
+             <th>Plataformas</th>
+        </thead>
         <tbody>
             <tr>
-                <th>Id</th>
+                <td>  <img src="{{asset(entity.getWebPath)}}" alt="Portada" height="200" width="200" />
+                </td>
+               
                 <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Titulo</th>
                 <td>{{ entity.titulo }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
                 <td>{{ entity.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>Path</th>
                 <td>{{ entity.path }}</td>
-            </tr>
-             <tr>
-                <th>Plataformas</th>
                 <td> 
                 {% for platafora in listaPlataformas %}
                       {% if platafora.letraBlanca == true %}
@@ -35,10 +36,7 @@
                 {% endfor %}
                 </td>
             </tr>
-            <tr>
-        <img src="{{asset(entity.getWebPath)}}" alt="Portada" height="200" width="200" />
-            
-            </tr>
+          
         </tbody>
     </table>
     

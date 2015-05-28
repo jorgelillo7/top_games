@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use JorgeLillo\TopGamesBundle\Entity\Juego;
 use JorgeLillo\TopGamesBundle\Entity\JuegoPlataforma;
+use JorgeLillo\TopGamesBundle\Entity\ListaJuego;
 use JorgeLillo\TopGamesBundle\Form\JuegoType;
 
 /**
@@ -97,8 +98,9 @@ class JuegoController extends Controller
      * Finds and displays a Juego entity.
      *
      */
-    public function showAction($id)
+    public function showAction(Request $request, $id)
     {
+        $error = $request->get('error');
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('TopGamesBundle:Juego')->find($id);
@@ -123,6 +125,7 @@ class JuegoController extends Controller
             'entity'      => $entity,
             'listaPlataformas' => $listaPlataformas,
             'misListas' => $misListas,
+            'error' => $error,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -331,21 +334,36 @@ class JuegoController extends Controller
     
     public function addToListAction (Request $request){
            $idJuego = $request->get('idJuego');
-            $idLista = $request->get('idList');
-        var_dump($idJuego);
-        var_dump($idLista);
+           $idLista = $request->get('idList');
+       
             $em = $this->getDoctrine()->getManager();
             
-           /* $juego = $em->getRepository('TopGamesBundle:Juego')->find($idJuego);
+            $repository = $em->getRepository('TopGamesBundle:ListaJuego');
+              $query = $repository->createQueryBuilder('lj')
+                ->where('lj.idJuego = :juego')
+                 ->andWhere('lj.idLista = :lista')
+                ->setParameter('juego', $idJuego)
+                ->setParameter('lista', $idLista)
+                ->getQuery();
+            $listaJuego = $query->getResult();
+            
+            if($listaJuego == null){
+                  $juego = $em->getRepository('TopGamesBundle:Juego')->find($idJuego);
+            $lista = $em->getRepository('TopGamesBundle:Lista')->find($idLista);
              
-            $juegoPlataforma = new JuegoPlataforma();
-            $juegoPlataforma->setIdJuego($juego->getId());
-            $juegoPlataforma->setIdPlataforma($idPlataforma);
-            $em->persist($juegoPlataforma);
+            $listaJuego = new ListaJuego();
+            $listaJuego->setIdJuego($juego->getId());
+            $listaJuego->setIdLista($lista->getId());
+            $em->persist($listaJuego);
             $em->flush();
-         */
-        
+            
            return $this->redirect($this->generateUrl('lista_show', array('id' => $idLista)));
+            } else { 
+           return $this->redirect($this->generateUrl('juego_show', array('id' => $idJuego, 'error' => "-1")));
+                
+            }
+            
+          
     
         
     }
