@@ -14,19 +14,32 @@ class DefaultController extends Controller {
 
     public function buscarAction(Request $request) {
         $search = $request->get('nombre');
-         
-        $em = $this->getDoctrine()->getEntityManager(); 
-       $repository = $em->getRepository('TopGamesBundle:Juego');
-       $query = $repository->createQueryBuilder('p')
-               ->where('p.titulo LIKE :word')
-               //->orWhere('p.discription LIKE :word')
-               ->setParameter('word', '%'.$search.'%')
-               ->getQuery();
-$entities = $query->getResult();
+        $searchType = $request->get('searchType');
 
-        foreach ($entities as $juego) {
-            $juego->setListaPlataformas($this->getListaPlataformas($juego->getId()));
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        if ($searchType == "juego") {
+            $repository = $em->getRepository('TopGamesBundle:Juego');
+            $query = $repository->createQueryBuilder('p')
+                    ->where('p.titulo LIKE :word')
+                    ->setParameter('word', '%' . $search . '%')
+                    ->getQuery();
+            $entities = $query->getResult();
+
+            foreach ($entities as $juego) {
+                $juego->setListaPlataformas($this->getListaPlataformas($juego->getId()));
+            }
+            
+        } else if($searchType == "lista"){
+            $repository = $em->getRepository('TopGamesBundle:Lista');
+            $query = $repository->createQueryBuilder('l')
+                      ->where('l.nombre LIKE :word')
+                      ->setParameter('word', '%' . $search . '%')
+                      ->getQuery();
+            $entities = $query->getResult();
         }
+
+
 
         //Pagination
         $paginator = $this->get('knp_paginator');
@@ -35,10 +48,11 @@ $entities = $query->getResult();
         );
 
         return $this->render(
-                        'TopGamesBundle:Default:searchList.html.twig', array(
+                    'TopGamesBundle:Default:searchList.html.twig', array(
                     'entities' => $pagination,
+                    'searchType' => $searchType,
                     'cadena' => $search,
-                        )
+                    )
         );
     }
 
