@@ -5,6 +5,7 @@ namespace JorgeLillo\TopGamesBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JorgeLillo\TopGamesBundle\Entity\Lista;
+use JorgeLillo\TopGamesBundle\Entity\ListaJuego;
 use JorgeLillo\TopGamesBundle\Form\ListaType;
 
 /**
@@ -110,7 +111,6 @@ class ListaController extends Controller {
 
         $lista = $em->getRepository('TopGamesBundle:Lista')->find($id);
 
-
         $sql = 'SELECT juego.id '
                 . 'FROM juego AS juego '
                 . 'INNER JOIN lista_juego AS lj ON lj.id_juego = juego.id '
@@ -136,9 +136,11 @@ class ListaController extends Controller {
 
         $deleteForm = $this->createDeleteForm($id);
 
+         $usuarioId = $this->get('security.context')->getToken()->getUser()->getId();
         return $this->render('TopGamesBundle:Lista:show.html.twig', array(
                     'entity' => $lista,
                     'juegosAsociados' => $juegosList,
+                    "userId" => $usuarioId,
                     'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -289,6 +291,38 @@ class ListaController extends Controller {
             $em->flush();
             
            return $this->redirect($this->generateUrl('lista_show', array('id' => $idLista)));
+    }
+    
+    public function cloneListAction($idList, $idUser){
+        $em = $this->getDoctrine()->getManager();
+      
+        $lista = $em->getRepository('TopGamesBundle:Lista')->find($idList);
+         
+        $listaClonada = new Lista();
+        $listaClonada->setNombre($lista->getNombre());
+        $listaClonada->setDescripcion($lista->getDescripcion());
+        $listaClonada->setAutorOriginal($lista->getAutorOriginal());
+        $listaClonada->setIdUsuario($idUser);
+        
+        $em->persist($listaClonada);
+        $em->flush();
+        
+        $sql = 'SELECT juego.id '
+                . 'FROM juego AS juego '
+                . 'INNER JOIN lista_juego AS lj ON lj.id_juego = juego.id '
+                . 'AND lj.id_lista = ' . $lista->getId();
+        $statement = $em->getConnection()->prepare($sql);
+        $statement->execute();
+        $juegosAsociadosId = $statement->fetchAll();
+
+        foreach ($juegosAsociadosId as $idJuego) {
+            $juegoEnLista = new ListaJuego();
+            $juegoEnLista->setIdJuego($idJuego['id']);
+            $juegoEnLista->setIdLista($listaClonada->getId());
+        $em->persist($juegoEnLista);
+        $em->flush();
+        }
+         return $this->redirect($this->generateUrl('lista_show', array('id' => $listaClonada->getId())));
     }
 
 }

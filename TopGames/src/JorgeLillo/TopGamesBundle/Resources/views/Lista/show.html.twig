@@ -28,6 +28,12 @@
             </tr>
         </tbody>
     </table>
+    
+     {% if entity.idUsuario !=  userId %}
+           <a href="{{ path('lista_juego_clonar', { 'idList':  entity.id ,'idUser': userId}) }}">clonar lista</a>
+           <br>
+    {% endif %}
+           
     Listado de juegos: (Elementos: {{juegosAsociados|length}})
     {% if juegosAsociados|length > 0 %}
         <table class="record_properties">

@@ -36,3 +36,7 @@ lista_delete:
 lista_juego_remove:
     path:     /removeFromList/{idJuego}/{idLista}
     defaults: {_controller: TopGamesBundle:Lista:removeFromList}
+    
+lista_juego_clonar:
+    path:     /cloneList/{idList}/{idUser}
+    defaults: {_controller: TopGamesBundle:Lista:cloneList}
