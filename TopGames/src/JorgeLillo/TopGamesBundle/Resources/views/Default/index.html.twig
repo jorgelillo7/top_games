@@ -33,24 +33,15 @@
     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
+          {{misListasRandom|length}}
+         {% for listaRandom in misListasRandom %}
         <div class="col-md-4">
-          <h2><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Lista random 1</h2>
+          <h2><span class="glyphicon glyphicon-book" aria-hidden="true"></span> {{listaRandom.nombre}}</h2>
           <p>
           </p>
-          <p><a class="btn btn-primary" href="" role="button">Detalles &raquo;</a></p>
+          <p><a class="btn btn-primary" href="{{ path('lista_show', { 'id': listaRandom.id }) }}" role="button">Detalles &raquo;</a></p>
         </div>
-        <div class="col-md-4">
-          <h2><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Lista random 2</h2>
-          <p>
-          </p>
-          <p><a class="btn btn-primary" href="" role="button">Detalles &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-          <h2><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Lista Favorita</h2>
-          <p>
-          </p>
-          <p><a class="btn btn-primary" href="" role="button">Detalles&raquo;</a></p>
-        </div>
+        {% endfor %}
       </div>
 
       <hr>

@@ -9,7 +9,29 @@ use JorgeLillo\TopGamesBundle\Form\JuegoType;
 class DefaultController extends Controller {
 
     public function indexAction() {
-        return $this->render('TopGamesBundle:Default:index.html.twig');
+         $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('TopGamesBundle:Lista');
+        $count = $repository->createQueryBuilder('u')
+             ->select('COUNT(u)')
+             ->getQuery()
+             ->getSingleScalarResult();
+        
+        $randomValue = rand(0, $count - 1);
+        var_dump($randomValue);
+        
+        $misListasRandom = $repository->createQueryBuilder('u')
+            ->setFirstResult($randomValue)
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+        ;
+        
+         return $this->render(
+                    'TopGamesBundle:Default:index.html.twig', array(
+                    'misListasRandom' => $misListasRandom
+                    )
+        );
+       
     }
 
     public function buscarAction(Request $request) {
