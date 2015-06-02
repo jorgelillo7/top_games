@@ -20,7 +20,7 @@ plataforma_edit:
     defaults: { _controller: "TopGamesBundle:Plataforma:edit" }
 
 plataforma_update:
-    path:     /{id}/update
+    path:     /update
     defaults: { _controller: "TopGamesBundle:Plataforma:update" }
     methods:  [POST, PUT]
 

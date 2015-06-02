@@ -35,22 +35,23 @@ class PlataformaController extends Controller
      */
     public function createAction(Request $request)
     {
+       $nombre = $request->get('nombre');
+       $color = $request->get('color');
+       $letraBlanca = $request->get('letraBlanca');
+      
         $entity = new Plataforma();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('plataforma_show', array('id' => $entity->getId())));
+        $entity->setNombre($nombre);
+        $entity->setColor($color);
+        if($letraBlanca == 'on'){
+             $entity->setLetraBlanca(true);
         }
+         
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($entity);
+        $em->flush();
 
-        return $this->render('TopGamesBundle:Plataforma:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        return $this->redirect($this->generateUrl('plataforma_show', array('id' => $entity->getId())));
+          
     }
 
     /**
@@ -155,29 +156,36 @@ class PlataformaController extends Controller
      * Edits an existing Plataforma entity.
      *
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        
+        $idPlataforma = $request->get('id');
+        $nombre = $request->get('nombre');
+        $color = $request->get('color');
+        $letraBlanca = $request->get('letraBlanca');
 
-        $entity = $em->getRepository('TopGamesBundle:Plataforma')->find($id);
+        $entity = $em->getRepository('TopGamesBundle:Plataforma')->find($idPlataforma);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Plataforma entity.');
         }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('plataforma_edit', array('id' => $id)));
+        $entity->setNombre($nombre);
+        $entity->setColor($color);
+        if($letraBlanca == 'on'){
+             $entity->setLetraBlanca(true);
+        } else{
+            $entity->setLetraBlanca(false);
         }
+        
+        $em->persist($entity);
+        $em->flush();
+        
+        $deleteForm = $this->createDeleteForm($idPlataforma);
+       
 
         return $this->render('TopGamesBundle:Plataforma:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
