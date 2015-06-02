@@ -35,6 +35,8 @@ class Lista
     private $idUsuario;
 
 
+    public $juegoParaHome;
+     
     /**
      * Get id
      *
@@ -135,5 +137,11 @@ class Lista
     public function getIdUsuario()
     {
         return $this->idUsuario;
+    }
+    
+    public function setJuegoParaHome($juegoParaHome) {
+        $this->juegoParaHome = $juegoParaHome;
+
+        return $this;
     }
 }

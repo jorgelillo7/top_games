@@ -9,29 +9,42 @@ use JorgeLillo\TopGamesBundle\Form\JuegoType;
 class DefaultController extends Controller {
 
     public function indexAction() {
-         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('TopGamesBundle:Lista');
-        $count = $repository->createQueryBuilder('u')
-             ->select('COUNT(u)')
-             ->getQuery()
-             ->getSingleScalarResult();
+        $em = $this->getDoctrine()->getManager();
+        $sql = 'SELECT lista.id '
+                    . 'FROM lista AS lista '
+                    . 'ORDER BY RAND()'
+                    . 'LIMIT 3';
+            $statement = $em->getConnection()->prepare($sql);
+            $statement->execute();
+        $misListasRandomId = $statement->fetchAll(); 
         
-        $randomValue = rand(0, $count - 1);
-        var_dump($randomValue);
-        
-        $misListasRandom = $repository->createQueryBuilder('u')
-            ->setFirstResult($randomValue)
-            ->setMaxResults(3)
-            ->getQuery()
-            ->getResult()
-        ;
-        
-         return $this->render(
-                    'TopGamesBundle:Default:index.html.twig', array(
+         $misListasRandom = array();
+        foreach ($misListasRandomId as $idLista) {
+            $lista = $em->getRepository('TopGamesBundle:Lista')->find($idLista);
+            array_push($misListasRandom, $lista);
+        }
+
+        foreach ($misListasRandom as $lista) {
+            $sql = 'SELECT juego.id '
+                    . 'FROM juego AS juego '
+                    . 'INNER JOIN lista_juego AS lj ON lj.id_juego = juego.id '
+                    . 'AND lj.id_lista = ' . $lista->getId();
+            $statement = $em->getConnection()->prepare($sql);
+            $statement->execute();
+            $juegosAsociadosId = $statement->fetchAll();
+
+            if(count($juegosAsociadosId) >0){
+                $idRandomGame = $juegosAsociadosId[rand(0, count($juegosAsociadosId) - 1)];
+
+            $juego = $em->getRepository('TopGamesBundle:Juego')->find($idRandomGame);
+            $lista->setJuegoParaHome($juego);
+            }
+        }
+        return $this->render(
+                        'TopGamesBundle:Default:index.html.twig', array(
                     'misListasRandom' => $misListasRandom
-                    )
+                        )
         );
-       
     }
 
     public function buscarAction(Request $request) {
@@ -39,7 +52,7 @@ class DefaultController extends Controller {
         $searchType = $request->get('searchType');
 
         $em = $this->getDoctrine()->getEntityManager();
-        
+
         if ($searchType == "juego") {
             $repository = $em->getRepository('TopGamesBundle:Juego');
             $query = $repository->createQueryBuilder('p')
@@ -51,17 +64,14 @@ class DefaultController extends Controller {
             foreach ($entities as $juego) {
                 $juego->setListaPlataformas($this->getListaPlataformas($juego->getId()));
             }
-            
-        } else if($searchType == "lista"){
+        } else if ($searchType == "lista") {
             $repository = $em->getRepository('TopGamesBundle:Lista');
             $query = $repository->createQueryBuilder('l')
-                      ->where('l.nombre LIKE :word')
-                      ->setParameter('word', '%' . $search . '%')
-                      ->getQuery();
+                    ->where('l.nombre LIKE :word')
+                    ->setParameter('word', '%' . $search . '%')
+                    ->getQuery();
             $entities = $query->getResult();
         }
-
-
 
         //Pagination
         $paginator = $this->get('knp_paginator');
@@ -70,11 +80,11 @@ class DefaultController extends Controller {
         );
 
         return $this->render(
-                    'TopGamesBundle:Default:searchList.html.twig', array(
+                        'TopGamesBundle:Default:searchList.html.twig', array(
                     'entities' => $pagination,
                     'searchType' => $searchType,
                     'cadena' => $search,
-                    )
+                        )
         );
     }
 
