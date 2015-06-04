@@ -1,3 +1,8 @@
+top_games_rest:
+    type: rest
+    resource: "@TopGamesRestBundle/Resources/config/routing.yml"
+    prefix:   /api
+
 top_games:
     resource: "@TopGamesBundle/Resources/config/routing.yml"
     prefix:   /

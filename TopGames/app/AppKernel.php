@@ -17,7 +17,10 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle($this),
+            new FOS\RestBundle\FOSRestBundle(),
             new JorgeLillo\TopGamesBundle\TopGamesBundle(),
+            new JorgeLillo\TopGamesRestBundle\TopGamesRestBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

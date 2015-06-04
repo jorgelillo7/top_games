@@ -1,0 +1,26 @@
+top_games_juegos_all:
+    pattern:  /juegos
+    defaults: { _controller: TopGamesRestBundle:JuegoRest:all, _format: ~ }
+    requirements:
+        _method: GET
+
+top_games_juegos_get:
+    pattern:  /juegos/{id}
+    defaults: { _controller: TopGamesRestBundle:JuegoRest:get, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
+        
+top_games_juegos_search:
+    pattern:  /juegos/search/{search}
+    defaults: { _controller: TopGamesRestBundle:JuegoRest:search, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
+        
+top_games_juegos_by_list:
+    pattern:  /juegos/fromList/{idList}
+    defaults: { _controller: TopGamesRestBundle:JuegoRest:getByList, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"

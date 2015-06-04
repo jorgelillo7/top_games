@@ -39,6 +39,8 @@ class Juego {
     private $descripcion;
     
     public $listaPlataformas;
+    
+    public $imageBytes;
 
     public function getAbsolutePath() {
         return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
@@ -134,6 +136,13 @@ class Juego {
 
         return $this;
     }
+    
+     public function setImageBytes($imageBytes) {
+        $this->imageBytes = $imageBytes;
+
+        return $this;
+    }
+
 
     public function upload() {
         // the file property can be empty if the field is not required
