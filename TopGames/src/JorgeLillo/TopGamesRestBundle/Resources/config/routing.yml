@@ -1,26 +1,54 @@
 top_games_juegos_all:
-    pattern:  /juegos
+    pattern:  /games
     defaults: { _controller: TopGamesRestBundle:JuegoRest:all, _format: ~ }
     requirements:
         _method: GET
 
 top_games_juegos_get:
-    pattern:  /juegos/{id}
+    pattern:  /games/{id}
     defaults: { _controller: TopGamesRestBundle:JuegoRest:get, _format: ~ }
     requirements:
         _method: GET
         id: "\d+"
         
 top_games_juegos_search:
-    pattern:  /juegos/search/{search}
+    pattern:  /games/search/{search}
     defaults: { _controller: TopGamesRestBundle:JuegoRest:search, _format: ~ }
     requirements:
         _method: GET
         id: "\d+"
         
 top_games_juegos_by_list:
-    pattern:  /juegos/fromList/{idList}
+    pattern:  /games/fromList/{idList}
     defaults: { _controller: TopGamesRestBundle:JuegoRest:getByList, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
+        
+        
+top_games_listas_all:
+    pattern:  /lists
+    defaults: { _controller: TopGamesRestBundle:ListaRest:all, _format: ~ }
+    requirements:
+        _method: GET
+
+top_games_listas_get:
+    pattern:  /lists/{id}
+    defaults: { _controller: TopGamesRestBundle:ListaRest:get, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
+        
+top_games_listas_search:
+    pattern:  /lists/search/{search}
+    defaults: { _controller: TopGamesRestBundle:ListaRest:search, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
+        
+top_games_listas_by_user:
+    pattern:  /lists/fromUser/{idUser}
+    defaults: { _controller: TopGamesRestBundle:ListaRest:getByUser, _format: ~ }
     requirements:
         _method: GET
         id: "\d+"

@@ -2,7 +2,7 @@
 
 namespace JorgeLillo\TopGamesRestBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use JorgeLillo\TopGamesBundle\Entity\Juego;
@@ -10,7 +10,15 @@ use JorgeLillo\TopGamesBundle\Entity\Lista;
 
 class JuegoRestController extends FOSRestController {
 
+    
     /**
+     * Get all the games form application, by default it will return a json object.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Get all games from application",
+     * )
+     * 
      * @Rest\View
      */
     public function allAction() {
@@ -26,6 +34,21 @@ class JuegoRestController extends FOSRestController {
     }
 
     /**
+     * @ApiDoc(
+     *  description="Returns a collection of Object",
+     *  requirements={
+     *      {
+     *          "name"="limit",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="how many objects to return"
+     *      }
+     *  },
+     *  parameters={
+     *      {"name"="categoryId", "dataType"="integer", "required"=true, "description"="category id"}
+     *  }
+     * )
+     * 
      * @Rest\View
      */
     public function getAction($id) {
