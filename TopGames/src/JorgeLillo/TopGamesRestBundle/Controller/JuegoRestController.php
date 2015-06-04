@@ -16,7 +16,7 @@ class JuegoRestController extends FOSRestController {
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="Get all games from application",
+     *  description="Get all games",
      * )
      * 
      * @Rest\View
@@ -34,18 +34,12 @@ class JuegoRestController extends FOSRestController {
     }
 
     /**
+     * Get a games by id form application, by default it will return a json object.
+     *
      * @ApiDoc(
-     *  description="Returns a collection of Object",
-     *  requirements={
-     *      {
-     *          "name"="limit",
-     *          "dataType"="integer",
-     *          "requirement"="\d+",
-     *          "description"="how many objects to return"
-     *      }
-     *  },
+     *  description="Returns a game",
      *  parameters={
-     *      {"name"="categoryId", "dataType"="integer", "required"=true, "description"="category id"}
+     *      {"name"="{id}", "dataType"="integer", "required"=true, "description"="game id"}
      *  }
      * )
      * 
@@ -66,7 +60,14 @@ class JuegoRestController extends FOSRestController {
         return array('juego' => $entity);
     }
 
-    /**
+     /**
+     * Search for games given a criteria, by default it will return a json object.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Search for games",
+     * )
+     * 
      * @Rest\View
      */
     public function searchAction($search) {
@@ -89,8 +90,14 @@ class JuegoRestController extends FOSRestController {
         return array('juegos' => $entities);
     }
     
-    
      /**
+     * Return the list's list of games, by default it will return a json object.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Search for games by list",
+     * )
+     * 
      * @Rest\View
      */
     public function getByListAction($idList) {

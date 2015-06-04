@@ -52,3 +52,23 @@ top_games_listas_by_user:
     requirements:
         _method: GET
         id: "\d+"
+        
+top_games_usuarios_all:
+    pattern:  /users
+    defaults: { _controller: TopGamesRestBundle:UsuarioRest:all, _format: ~ }
+    requirements:
+        _method: GET
+        
+top_games_usuarios_get:
+    pattern:  /users/{id}
+    defaults: { _controller: TopGamesRestBundle:UsuarioRest:get, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
+
+
+top_games_usuario_login:
+    pattern:  /users/login
+    defaults: { _controller: TopGamesRestBundle:UsuarioRest:login, _format: ~ }
+    requirements:
+        _method: POST 

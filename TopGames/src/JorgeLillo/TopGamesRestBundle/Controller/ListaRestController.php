@@ -2,6 +2,7 @@
 
 namespace JorgeLillo\TopGamesRestBundle\Controller;
 
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -10,7 +11,14 @@ use JorgeLillo\TopGamesBundle\Entity\Lista;
 
 class ListaRestController extends FOSRestController {
 
-    /**
+     /**
+     * Get all the list form application, by default it will return a json object.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Get all lists",
+     * )
+     * 
      * @Rest\View
      */
     public function allAction() {
@@ -19,7 +27,16 @@ class ListaRestController extends FOSRestController {
         return array('listas' => $entities);
     }
 
-    /**
+     /**
+     * Get a list by id form application, by default it will return a json object.
+     *
+     * @ApiDoc(
+     *  description="Returns a list",
+     *  parameters={
+     *      {"name"="{id}", "dataType"="integer", "required"=true, "description"="list id"}
+     *  }
+     * )
+     * 
      * @Rest\View
      */
     public function getAction($id) {
@@ -33,7 +50,14 @@ class ListaRestController extends FOSRestController {
         return array('lista' => $entity);
     }
 
-    /**
+       /**
+     * Search for lists given a criteria, by default it will return a json object.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Search for lists",
+     * )
+     * 
      * @Rest\View
      */
     public function searchAction($search) {
@@ -53,7 +77,14 @@ class ListaRestController extends FOSRestController {
     }
     
     
-     /**
+       /**
+     * Return the user's lists, by default it will return a json object.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Get user's lists",
+     * )
+     * 
      * @Rest\View
      */
     public function getByUserAction($idUser) {
