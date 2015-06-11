@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c89a3fae23cc6300c52b6aa1fa2c906b",
+    "hash": "11e9086becc0094d3e558dff353f6d1a",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -712,7 +712,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/85f9f58025ee4bdfdea1ee5347ca881e6609c11a",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/12cc43de71cb556504be996df845ecc48a2d9f6f",
                 "reference": "e620c99c21177c1035715046bc30d7c116f06f58",
                 "shasum": ""
             },
@@ -1449,7 +1449,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/36c9f8b7fc654d7b6a4073fc746c416aefcd06d5",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/c7909c576e17ef013d59d7f5166ba3c7325e459b",
                 "reference": "36c9f8b7fc654d7b6a4073fc746c416aefcd06d5",
                 "shasum": ""
             },
@@ -1516,6 +1516,61 @@
                 "rest"
             ],
             "time": "2015-06-03 18:55:46"
+        },
+        {
+            "name": "nelmio/cors-bundle",
+            "version": "dev-master",
+            "target-dir": "Nelmio/CorsBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nelmio/NelmioCorsBundle.git",
+                "reference": "fdd19853eb1e82b3437135c50ac7567b8d749a23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nelmio/NelmioCorsBundle/zipball/fdd19853eb1e82b3437135c50ac7567b8d749a23",
+                "reference": "fdd19853eb1e82b3437135c50ac7567b8d749a23",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "~2.2"
+            },
+            "require-dev": {
+                "matthiasnoback/symfony-dependency-injection-test": "0.2.*",
+                "mockery/mockery": "0.9.*"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Nelmio\\CorsBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nelmio",
+                    "homepage": "http://nelm.io"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/nelmio/NelmioCorsBundle/contributors"
+                }
+            ],
+            "description": "Adds CORS (Cross-Origin Resource Sharing) headers support in your Symfony2 application",
+            "keywords": [
+                "api",
+                "cors",
+                "crossdomain"
+            ],
+            "time": "2015-05-10 18:16:01"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -2366,7 +2421,8 @@
     "stability-flags": {
         "friendsofsymfony/rest-bundle": 20,
         "jms/serializer-bundle": 20,
-        "nelmio/api-doc-bundle": 20
+        "nelmio/api-doc-bundle": 20,
+        "nelmio/cors-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
