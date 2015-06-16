@@ -12,7 +12,7 @@ class JuegoRestController extends FOSRestController {
 
     
     /**
-     * Get all the games form application, by default it will return a json object.
+     * Get all the games form application (máx 3), by default it will return a json object.
      *
      * @ApiDoc(
      *  resource=true,
@@ -24,7 +24,36 @@ class JuegoRestController extends FOSRestController {
     public function allAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('TopGamesBundle:Juego')->findAll();
+         $entities = $em->getRepository("TopGamesBundle:Juego")->createQueryBuilder('o') 
+                ->setMaxResults(3)
+                ->getQuery()
+                ->getResult();
+        foreach ($entities as $juego) {
+            $juego->setListaPlataformas($this->getListaPlataformas($juego->getId()));
+            $juego->setImageBytes($this->getImageBytes($juego));
+        }
+
+        return array('juegos' => $entities);
+    }
+    
+     /**
+     * Get more games form application from an offset, by default it will return a json object.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Get more games from offset",
+     * )
+     * 
+     * @Rest\View
+     */
+     public function moreGamesAction($offset) {
+        $em = $this->getDoctrine()->getManager();
+         $entities = $em->getRepository("TopGamesBundle:Juego")->createQueryBuilder('o') 
+                ->setFirstResult($offset)
+                ->setMaxResults(3)
+                ->getQuery()
+                ->getResult();
+                      
         foreach ($entities as $juego) {
             $juego->setListaPlataformas($this->getListaPlataformas($juego->getId()));
             $juego->setImageBytes($this->getImageBytes($juego));

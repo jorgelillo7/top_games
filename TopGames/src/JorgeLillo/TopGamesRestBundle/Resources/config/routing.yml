@@ -3,6 +3,13 @@ top_games_juegos_all:
     defaults: { _controller: TopGamesRestBundle:JuegoRest:all, _format: ~ }
     requirements:
         _method: GET
+        
+top_games_juegos_more:
+    pattern:  /moreGames/{offset}
+    defaults: { _controller: TopGamesRestBundle:JuegoRest:moreGames, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"
 
 top_games_juegos_get:
     pattern:  /games/{id}

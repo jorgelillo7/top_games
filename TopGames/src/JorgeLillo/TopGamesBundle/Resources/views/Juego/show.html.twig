@@ -27,11 +27,11 @@
                 <td>{{ entity.descripcion }}</td>
                 <td>{{ entity.path }}</td>
                 <td> 
-                {% for platafora in listaPlataformas %}
-                      {% if platafora.letraBlanca == true %}
-                            <li><b style="color: white;border-radius: 4px; background-color: {{ platafora.color }}">{{ platafora.nombre }}</b></li>
+                {% for plataforma in listaPlataformas %}
+                      {% if plataforma.letraBlanca == true %}
+                            <li><b style="color: white;border-radius: 4px; background-color: {{ plataforma.color }}">{{ plataforma.nombre }}</b></li>
                         {% else %}
-                            <li><b style="border-radius: 4px; background-color: {{ platafora.color }}">{{ platafora.nombre }}</b></li>
+                            <li><b style="border-radius: 4px; background-color: {{ plataforma.color }}">{{ plataforma.nombre }}</b></li>
                         {% endif %}
                 {% endfor %}
                 </td>
