@@ -12,7 +12,7 @@ class JuegoRestController extends FOSRestController {
 
     
     /**
-     * Get all the games form application (máx 3), by default it will return a json object.
+     * Get all the games form application, by default it will return a json object.
      *
      * @ApiDoc(
      *  resource=true,
@@ -41,7 +41,7 @@ class JuegoRestController extends FOSRestController {
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="Get more games from offset",
+     *  description="Get more games from an offset",
      * )
      * 
      * @Rest\View

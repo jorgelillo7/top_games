@@ -11,13 +11,23 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <form role="form" class="form-horizontal" method='post' action='{{ path('buscar') }}'>
-          <div class="form-group">
-            <label for="artista" class="col-sm-2 control-label">Buscador:</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" name='nombre' id="nombre" placeholder="¿Qué juego buscas? :)" required="required">
-                <input type="radio" name="searchType" value="juego" checked>Juego<br>
-                <input type="radio" name="searchType" value="lista">Lista
-            </div>
+            <div class="row form-inline">
+                <div class="form-group" style="margin-left: 10%; width: 45%;">
+                <input type="text" style="min-width: 400px" class="form-control" name='nombre' id="nombre" placeholder="¿Qué juego buscas? :)" required="required">
+                </div>
+                <div class="form-group" style=" width: 18%;">
+                <ul class="segmented-control">
+                    <li class="segmented-control__item">
+                          <input class="segmented-control__input" type="radio" name="searchType" value="juego" id="option-1" checked>
+                          <label class="segmented-control__label" for="option-1">Juego</label>
+                    </li>
+                    <li class="segmented-control__item">
+                         <input class="segmented-control__input" type="radio" name="searchType" value="lista" id="option-2">
+
+                        <label class="segmented-control__label" for="option-2">Lista</label>
+                    </li>
+                </ul>
+                </div> 
           </div>
           <div class="form-group">
             <button type="submit" class="col-sm-offset-2 col-sm-1 btn btn-primary">Buscar</button>
