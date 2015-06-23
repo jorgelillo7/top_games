@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ListaJuego
  */
-class ListaJuego
-{
+class ListaJuego {
+
     /**
      * @var integer
      */
@@ -24,14 +24,12 @@ class ListaJuego
      */
     private $idJuego;
 
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -41,8 +39,7 @@ class ListaJuego
      * @param integer $idLista
      * @return ListaJuego
      */
-    public function setIdLista($idLista)
-    {
+    public function setIdLista($idLista) {
         $this->idLista = $idLista;
 
         return $this;
@@ -53,8 +50,7 @@ class ListaJuego
      *
      * @return integer 
      */
-    public function getIdLista()
-    {
+    public function getIdLista() {
         return $this->idLista;
     }
 
@@ -64,8 +60,7 @@ class ListaJuego
      * @param integer $idJuego
      * @return ListaJuego
      */
-    public function setIdJuego($idJuego)
-    {
+    public function setIdJuego($idJuego) {
         $this->idJuego = $idJuego;
 
         return $this;
@@ -76,8 +71,8 @@ class ListaJuego
      *
      * @return integer 
      */
-    public function getIdJuego()
-    {
+    public function getIdJuego() {
         return $this->idJuego;
     }
+
 }

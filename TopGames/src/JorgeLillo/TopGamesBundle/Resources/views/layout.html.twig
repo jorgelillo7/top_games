@@ -1,116 +1,122 @@
 <!DOCTYPE html>
 
 <html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <title> {% block title %}{% endblock title %}</title>
-    <!-- Bootstrap -->
-    <!-- link rel="stylesheet" href="/public/css/bootstrap.css" type="text/css" media="screen" -->
-    <!-- link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css" type="text/css" -->
-    <!-- link rel="stylesheet" type="text/css" href="/public/css/styles.css" -->
-    {% block stylesheets %}
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title> {% block title %}{% endblock title %}</title>
+        <!-- Bootstrap -->
+        {% block stylesheets %}
         {% stylesheets 'bundles/topgames/css/*' filter='cssrewrite' %}
-            <link rel="stylesheet" href="{{ asset_url }}" />
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         {% endstylesheets %}
+        <script>
+            function changePlaceHolder(){
+                var isList = $("#option-2").is(':checked');
+                if(isList == true){
+                    $('#nombre').attr("placeholder", "¿Qué lista buscas? :)")
+                } else {
+                    $('#nombre').attr("placeholder", "¿Qué juego buscas? :)")
+                }
+            }
+        </script>
     {% endblock %}
-    
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-  </head>
 
-  <body bgcolor='white' text='navy'>
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
-    <!-- barra de navegación estática superior -->
-    <div class="navbar navbar-default" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"> </span></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse navbar-responsive-collapse">
-          <ul class="nav navbar-nav"> 
+    </head>
+
+    <body bgcolor='white' text='navy'>
+
+        <!-- barra de navegación estática superior -->
+        <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"> </span></a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav"> 
             {% if is_granted('ROLE_ADMIN') %}
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;
-                    Usuarios <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="{{ path('usuario') }}">Gestión de Usuarios</a></li>
-                  <li><a href="{{ path('usuario_new') }}">Nuevo Usuario</a></li>
-                </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;
-                    Juegos <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="{{ path('juego') }}">Gestión de Juegos</a></li>
-                  <li><a href="{{ path('plataforma') }}">Gestión de Plataformas</a></li>
-                </ul>
-              </li>
-               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;
-                    Listas <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="{{ path('lista_gestion') }}">Gestión de Listas</a></li>
-                  <li><a href="{{ path('lista') }}">Mis listas</a></li>
-                </ul>
-              </li>
-            <li><a href=''><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp; Configurar Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;
+                            Usuarios <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ path('usuario') }}">Gestión de Usuarios</a></li>
+                            <li><a href="{{ path('usuario_new') }}">Nuevo Usuario</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp;
+                            Juegos <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ path('juego') }}">Gestión de Juegos</a></li>
+                            <li><a href="{{ path('plataforma') }}">Gestión de Plataformas</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;
+                            Listas <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ path('lista_gestion') }}">Gestión de Listas</a></li>
+                            <li><a href="{{ path('lista') }}">Mis listas</a></li>
+                        </ul>
+                    </li>
             {% endif %}
-            
+
              {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') %}
-            <li><a href="{{ path('lista') }}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;Mis listas</a></li>
+                    <li><a href="{{ path('lista') }}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;Mis listas</a></li>
             {% endif %}
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="pull-right">
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="pull-right">
               {% if app.security.getToken().getRoles() == [] %}
-                <form class="navbar-form navbar-right form-inline" role="form" action='{{ path('login_check') }}' method='post'>
-                  <div class="form-group">
-                      <input type="text" placeholder="Usuario" id="username" name="_username" class="form-control" required="required">
-                  </div>
-                  <div class="form-group">
-                    <input type="password" placeholder="Password" id="password" name="_password" class="form-control" required="required">
-                  </div>
-                  <button type="submit" class="btn btn-success btn-xlarge">Login <span class="glyphicon glyphicon-log-in naranja" aria-hidden="true"></span></button>
-                  <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                </form>
+                        <form class="navbar-form navbar-right form-inline" role="form" action='{{ path('login_check') }}' method='post'>
+                            <div class="form-group">
+                                <input type="text" placeholder="Usuario" id="username" name="_username" class="form-control" required="required">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" placeholder="Password" id="password" name="_password" class="form-control" required="required">
+                            </div>
+                            <button type="submit" class="btn btn-success btn-xlarge">Login <span class="glyphicon glyphicon-log-in naranja" aria-hidden="true"></span></button>
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        </form>
               {% else %}
-                <form class="navbar-form navbar-right form-inline" role="form" action='{{ path('logout') }}' method='get'>
-                  <button type="submit" class="btn btn-warning btn-xlarge">
+                        <form class="navbar-form navbar-right form-inline" role="form" action='{{ path('logout') }}' method='get'>
+                            <button type="submit" class="btn btn-warning btn-xlarge">
                     {{ app.security.getToken().getUser().getUsername() }} <span class="glyphicon glyphicon-log-out naranja" aria-hidden="true"></span>
-                  </button>
-                </form>
+                            </button>
+                        </form>
               {% endif %}
-            </li>
-          </ul>
-        </div><!--/.navbar -->
-    </div>
-   
+                    </li>
+                </ul>
+            </div><!--/.navbar -->
+        </div>
+
     {% block content %}
     {% endblock content %}
-       
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  </body>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    </body>
 </html>

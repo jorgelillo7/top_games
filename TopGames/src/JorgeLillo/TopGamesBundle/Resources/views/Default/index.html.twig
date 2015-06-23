@@ -3,66 +3,70 @@
 {% block title %}{{ parent() }}Inicio{% endblock title %}
 
 {% block content %}
-  <div class="container">
+<div class="container">
     <div class="jumbotron">
-      <h1>TOP GAMES :D</h1>
-      
+        {% image 'bundles/topgames/images/top_games_gray.png' %}
+             <img src="{{ asset_url }}" alt="Example" />
+        {% endimage %}
+        <p>
         <div class="container">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <form role="form" class="form-horizontal" method='post' action='{{ path('buscar') }}'>
-            <div class="row form-inline">
-                <div class="form-group" style="margin-left: 10%; width: 45%;">
-                <input type="text" style="min-width: 400px" class="form-control" name='nombre' id="nombre" placeholder="¿Qué juego buscas? :)" required="required">
-                </div>
-                <div class="form-group" style=" width: 18%;">
-                <ul class="segmented-control">
-                    <li class="segmented-control__item">
-                          <input class="segmented-control__input" type="radio" name="searchType" value="juego" id="option-1" checked>
-                          <label class="segmented-control__label" for="option-1">Juego</label>
-                    </li>
-                    <li class="segmented-control__item">
-                         <input class="segmented-control__input" type="radio" name="searchType" value="lista" id="option-2">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form role="form" class="form-horizontal" method='post' action='{{ path('buscar') }}'>
+                        <div class="row form-inline">
+                            <div class="form-group" style="margin-left: 10%; width: 45%;">
+                                <input type="text" style="min-width: 400px" class="form-control" name='nombre' id="nombre" placeholder="¿Qué juego buscas? :)" required="required">
+                            </div>
+                            <div class="form-group" style=" width: 18%;">
+                                <ul class="segmented-control">
+                                    <li class="segmented-control__item">
+                                        <input class="segmented-control__input" type="radio" name="searchType" value="juego" id="option-1" checked onchange="changePlaceHolder()">
+                                        <label class="segmented-control__label" for="option-1">Juego</label>
+                                    </li>
+                                    <li class="segmented-control__item">
+                                        <input class="segmented-control__input" type="radio" name="searchType" value="lista" id="option-2" onchange="changePlaceHolder()">
 
-                        <label class="segmented-control__label" for="option-2">Lista</label>
-                    </li>
-                </ul>
-                </div> 
-          </div>
-          <div class="form-group">
-            <button type="submit" class="col-sm-offset-2 col-sm-1 btn btn-primary">Buscar</button>
-          </div>
-        </form>
-      </div>
+                                        <label class="segmented-control__label" for="option-2">Lista</label>
+                                    </li>
+                                </ul>
+                            </div> 
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="col-sm-offset-2 col-sm-1 btn btn-primary">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
     </div>
-  </div>
-      
-      
-    </div>
-    
+
     <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
+        <!-- Example row of columns -->
+        <div class="row">
          {% for listaRandom in misListasRandom %}
-        <div class="col-md-4">
-          <h2><span class="glyphicon glyphicon-book" aria-hidden="true"></span> {{listaRandom.nombre}}</h2>
-          <p>
+            <div class="col-md-4">
+                <h2><span class="glyphicon glyphicon-book" aria-hidden="true"></span> {{listaRandom.nombre}}</h2>
+                <p>
                {% if listaRandom.juegoParaHome != null %}
-               <img src="{{asset(listaRandom.juegoParaHome.getWebPath)}}" alt="Portada" height="100" width="100" />
+                    <a href='{{ path('juego_show', { 'id': listaRandom.juegoParaHome.id }) }}'>
+                        <img src="{{asset(listaRandom.juegoParaHome.getWebPath)}}" alt="Portada" height="100" width="100" />
+                    </a>
               {{listaRandom.juegoParaHome.titulo}}
                {% endif %}
-          </p>
-          <p><a class="btn btn-primary" href="{{ path('lista_show', { 'id': listaRandom.id }) }}" role="button">Detalles &raquo;</a></p>
-        </div>
+                </p>
+                <p><a class="btn btn-primary" href="{{ path('lista_show', { 'id': listaRandom.id }) }}" role="button">Detalles &raquo;</a></p>
+            </div>
         {% endfor %}
-      </div>
+        </div>
 
-      <hr>
-      <footer>
-        <p>&copy; [UPM] PFM Top Games 2015</p>
-      </footer>
+        <hr>
+        <footer>
+            <p>&copy; Jorge Lillo Cobacho [UPM] PFM Top Games 2015</p>
+        </footer>
     </div> <!-- /container -->
-  </div>
-    
-  
+</div>
+
+
 {% endblock content %}

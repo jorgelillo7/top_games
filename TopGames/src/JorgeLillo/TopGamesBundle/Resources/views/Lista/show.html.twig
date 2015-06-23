@@ -2,85 +2,110 @@
 
 {% block title %} {{ parent()}} Detalles lista{% endblock title %}
 {% block content -%}
-    <h1>Lista</h1>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1>
+            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 
+            Listas: <small>detalles lista</small>
+        </h1>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <div class="panel panel-default">
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ entity.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ entity.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>Autororiginal</th>
-                <td>{{ entity.autorOriginal }}</td>
-            </tr>
-            <tr>
-                <th>Idusuario</th>
-                <td>{{ entity.idUsuario }}</td>
-            </tr>
-        </tbody>
-    </table>
-    
-     {% if entity.idUsuario !=  userId %}
-           <a href="{{ path('lista_juego_clonar', { 'idList':  entity.id ,'idUser': userId}) }}">clonar lista</a>
-           <br>
-    {% endif %}
-           
-    Listado de juegos: (Elementos: {{juegosAsociados|length}})
+                <table class="table table-striped table-condensed">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ entity.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <td>{{ entity.nombre }}</td>
+                        </tr>
+                        <tr>
+                            <th>Descripción</th>
+                            <td>{{ entity.descripcion }}</td>
+                        </tr>
+                        <tr>
+                            <th>Autor Original</th>
+                            <td>{{ entity.autorOriginal }}</td>
+                        </tr>
+                        <tr>
+                            <th>Propietario de lista</th>
+                            <td>{{ user.username }}</td>
+                        </tr>
+                        <tr>
+                            <th>Juegos en lista</th>
+                            <td>{{juegosAsociados|length}}</td>
+                        </tr> 
+                    </tbody>
+                </table>
+     {% if userId !=  null %}
+            {% if entity.idUsuario !=  userId %}
+                <a class="btn btn-primary" style="margin-left: 25px; margin-top: 7px" href="{{ path('lista_juego_clonar', { 'idList':  entity.id ,'idUser': userId}) }}">clonar lista</a>
+                <br>
+           {% endif %}
+     {% endif %}
+              {% if userId !=  null %}
+                <br>
+                <ul class="record_actions">
+                    <li>
+                        <a href="{{ path('lista') }}">
+                            Volver a listas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('lista_edit', { 'id': entity.id }) }}">
+                            Editar
+                        </a>
+                    </li>
+                    <li>{{ form(delete_form) }}</li>
+                </ul>
+{% endif %}
+                <br>
+                <b>Listado de juegos:</b> 
     {% if juegosAsociados|length > 0 %}
-        <table class="record_properties">
-               <tbody>
-               <thead>
+                <table class="table table-striped table-condensed">
+                    <tbody>
+                    <thead>
                     <th></th>
                     <th>Id </th>
                     <th>Título </th>
                     <th>Plataformas</th>
                     <th></th>
-               </thead>
+                    </thead>
                  {% for juego in juegosAsociados %}
-                        <tr>
-                            <td> <img src="{{asset(juego.getWebPath)}}" alt="Portada" height="200" width="200" />
+                    <tr>
+                        <td> 
+                            <a href='{{ path('juego_show', { 'id': juego.id }) }}'>
+                                <img src="{{asset(juego.getWebPath)}}" alt="Portada" height="200" width="200" />
+                            </a>
+                        </td>
                         <td>{{ juego.id }}</td>
                         <td>{{ juego.titulo }}</td>
                         <td> 
                        {% for platafora in juego.listaPlataformas %}
                              {% if platafora.letraBlanca == true %}
-                                   <li><b style="color: white;border-radius: 4px; background-color: {{ platafora.color }}">{{ platafora.nombre }}</b></li>
+                    <li><b style="color: white;border-radius: 4px; background-color: {{ platafora.color }}">{{ platafora.nombre }}</b></li>
                                {% else %}
-                                   <li><b style="border-radius: 4px; background-color: {{ platafora.color }}">{{ platafora.nombre }}</b></li>
+                    <li><b style="border-radius: 4px; background-color: {{ platafora.color }}">{{ platafora.nombre }}</b></li>
                                {% endif %}
                        {% endfor %}
-                       </td>
-                       <td>
-                                <a href="{{ path('lista_juego_remove', { 'idJuego': juego.id ,'idLista': entity.id}) }}">eliminar juego</a>
-                       </td>
-                   </tr>
+                    </td>
+                    <td>
+                       {% if userId !=  null %}
+                        <a href="{{ path('lista_juego_remove', { 'idJuego': juego.id ,'idLista': entity.id}) }}">eliminar juego</a>
+                       {% endif %}
+                    </td>
+                    </tr>
                   {% endfor %}
-       </table>
+                </table>
         {% else %}
-            <br>Sin juegos asociados   
+                <br>Sin juegos asociados   
      {% endif %}
-                   
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('lista') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('lista_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

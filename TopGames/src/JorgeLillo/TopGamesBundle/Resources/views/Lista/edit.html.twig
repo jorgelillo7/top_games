@@ -3,16 +3,31 @@
 {% block title %} {{ parent()}} Editar lista{% endblock title %}
 
 {% block content -%}
-    <h1>Lista edit</h1>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1>
+            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 
+            Listas: <small>editar lista</small>
+        </h1>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <div class="panel panel-default">
+
 
     {{ form(edit_form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('lista') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+                <ul class="record_actions">
+                    <li>
+                        <a href="{{ path('lista') }}">
+                            Volver a listas
+                        </a>
+                    </li>
+                    <li>{{ form(delete_form) }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 {% endblock content%}

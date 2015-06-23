@@ -31,7 +31,7 @@ lista_update:
 lista_delete:
     path:     /{id}/delete
     defaults: { _controller: "TopGamesBundle:Lista:delete" }
-    methods:  [POST, DELETE]
+    methods:  [GET, POST, DELETE]
 
 lista_juego_remove:
     path:     /removeFromList/{idJuego}/{idLista}

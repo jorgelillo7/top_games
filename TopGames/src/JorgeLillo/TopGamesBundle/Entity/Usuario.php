@@ -8,8 +8,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Usuario
  */
-class Usuario implements UserInterface, \Serializable
-{
+class Usuario implements UserInterface, \Serializable {
+
     /**
      * @var integer
      */
@@ -48,8 +48,7 @@ class Usuario implements UserInterface, \Serializable
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->isAdmin = false;
         $this->isActive = true;
         $this->createTime = new \DateTime();
@@ -60,8 +59,7 @@ class Usuario implements UserInterface, \Serializable
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -71,8 +69,7 @@ class Usuario implements UserInterface, \Serializable
      * @param  string  $username
      * @return Usuario
      */
-    public function setUsername($username)
-    {
+    public function setUsername($username) {
         $this->username = $username;
 
         return $this;
@@ -83,8 +80,7 @@ class Usuario implements UserInterface, \Serializable
      *
      * @return string username
      */
-    public function getUsername()
-    {
+    public function getUsername() {
         return $this->username;
     }
 
@@ -94,8 +90,7 @@ class Usuario implements UserInterface, \Serializable
      * @param  string  $password
      * @return Usuario
      */
-    public function setPassword($password)
-    {
+    public function setPassword($password) {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
 
         return $this;
@@ -106,8 +101,7 @@ class Usuario implements UserInterface, \Serializable
      *
      * @return string
      */
-    public function getPassword()
-    {
+    public function getPassword() {
         return $this->password;
     }
 
@@ -117,8 +111,7 @@ class Usuario implements UserInterface, \Serializable
      * @param  boolean $isAdmin
      * @return Usuario
      */
-    public function setIsAdmin($isAdmin)
-    {
+    public function setIsAdmin($isAdmin) {
         $this->isAdmin = $isAdmin;
 
         return $this;
@@ -129,8 +122,7 @@ class Usuario implements UserInterface, \Serializable
      *
      * @return boolean
      */
-    public function isAdmin()
-    {
+    public function isAdmin() {
         return $this->isAdmin;
     }
 
@@ -140,8 +132,7 @@ class Usuario implements UserInterface, \Serializable
      * @param  boolean $isActive
      * @return Usuario
      */
-    public function setIsActive($isActive)
-    {
+    public function setIsActive($isActive) {
         $this->isActive = $isActive;
 
         return $this;
@@ -152,8 +143,7 @@ class Usuario implements UserInterface, \Serializable
      *
      * @return boolean
      */
-    public function isActive()
-    {
+    public function isActive() {
         return $this->isActive;
     }
 
@@ -163,8 +153,7 @@ class Usuario implements UserInterface, \Serializable
      * @param  string  $email
      * @return Usuario
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
 
         return $this;
@@ -175,8 +164,7 @@ class Usuario implements UserInterface, \Serializable
      *
      * @return string
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -186,8 +174,7 @@ class Usuario implements UserInterface, \Serializable
      * @param  \DateTime $createTime
      * @return Usuario
      */
-    public function setCreateTime($createTime)
-    {
+    public function setCreateTime($createTime) {
         $this->createTime = $createTime;
 
         return $this;
@@ -198,23 +185,21 @@ class Usuario implements UserInterface, \Serializable
      *
      * @return \DateTime
      */
-    public function getCreateTime()
-    {
+    public function getCreateTime() {
         return $this->createTime;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function eraseCredentials()
-    {
+    public function eraseCredentials() {
+        
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getRoles()
-    {
+    public function getRoles() {
         if ($this->isActive) { // sólo si el usuario está activo
             $roles = ($this->isAdmin) ? array('ROLE_ADMIN', 'ROLE_USER') : array('ROLE_USER');
         } else {
@@ -227,49 +212,44 @@ class Usuario implements UserInterface, \Serializable
     /**
      * {@inheritDoc}
      */
-    public function getSalt()
-    {
+    public function getSalt() {
+        
     }
 
     /**
      * @see \Serializable::serialize()
      */
-    public function serialize()
-    {
+    public function serialize() {
         return serialize(array(
-          $this->id,
-          $this->username,
-          $this->password,
-          $this->isActive,
-          $this->isAdmin,
-          $this->email,
-      ));
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->isActive,
+            $this->isAdmin,
+            $this->email,
+        ));
     }
 
     /**
      * @see \Serializable::unserialize()
      */
-    public function unserialize($serialized)
-    {
+    public function unserialize($serialized) {
         list(
-          $this->id,
-          $this->username,
-          $this->password,
-          $this->isActive,
-          $this->isAdmin,
-          $this->email,
-          ) = unserialize($serialized);
+                $this->id,
+                $this->username,
+                $this->password,
+                $this->isActive,
+                $this->isAdmin,
+                $this->email,
+                ) = unserialize($serialized);
     }
-    
-    
 
     /**
      * Get isAdmin
      *
      * @return boolean 
      */
-    public function getIsAdmin()
-    {
+    public function getIsAdmin() {
         return $this->isAdmin;
     }
 
@@ -278,8 +258,8 @@ class Usuario implements UserInterface, \Serializable
      *
      * @return boolean 
      */
-    public function getIsActive()
-    {
+    public function getIsActive() {
         return $this->isActive;
     }
+
 }

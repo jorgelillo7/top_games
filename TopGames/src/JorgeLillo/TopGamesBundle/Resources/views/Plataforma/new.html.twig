@@ -3,34 +3,38 @@
 
 {% block title %} {{ parent()}} Alta de usuarios{% endblock title %}
 
-{% block content -%}
-    <h1>Plataforma creation</h1>
-
-    
-        <div class="container">
+{% block content -%} 
+<div class="container">
     <div class="panel panel-default">
-      <div class="panel-body">
-        <form role="form" class="form-horizontal" method='post' action='{{ path('plataforma_create') }}'>
-          <div class="form-group">
-            <div class="col-sm-4">
-                Nombre:<input type="text" class="form-control" name='nombre' id="nombre" required="required"> 
-                Color:<input type="color" name="color" value="color"><br>
-                Letra blanca:<input type="checkbox" name="letraBlanca" value="on">
-            </div>
-          </div>
-          <div class="form-group">
-            <button type="submit" class="col-sm-offset-2 col-sm-1 btn btn-primary">Añadir</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-      
+        <div class="panel-heading">
+            <h1>
+                <span class="glyphicon glyphicon-picture" aria-hidden="true"></span> 
+                Plataformas: <small>nueva</small>
+            </h1>
+        </div>
+        <div class="panel-body">
+            <form role="form" class="form-horizontal" method='post' action='{{ path('plataforma_create') }}'>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        Nombre:<input type="text" class="form-control" name='nombre' id="nombre" required="required"> 
+                        Color:<input type="color" name="color" value="color"><br>
+                        Letra blanca:<input type="checkbox" name="letraBlanca" value="on">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="col-sm-offset-2 col-sm-1 btn btn-primary">Añadir</button>
+                </div>
+            </form>
+        </div>
         <ul class="record_actions">
-    <li>
-        <a href="{{ path('plataforma') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+            <li>
+                <a href="{{ path('plataforma') }}">
+                    Volver a lista de plataformas
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
 {% endblock content %}

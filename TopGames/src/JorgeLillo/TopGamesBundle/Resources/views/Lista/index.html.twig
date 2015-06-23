@@ -3,47 +3,85 @@
 {% block title %} {{ parent()}} Mis listas{% endblock title %}
 
 {% block content -%}
-    <h1>Lista list</h1>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1>
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 
+                Listas: <small>listas dadas de alta en el sistema</small>
+            </h1>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Descripcion</th>
-                <th>Autororiginal</th>
-                <th>Idusuario</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+          {% if (entities|length) > 0 %}
+              {# Hay usuarios #}
+                <div class="panel panel-default">
+                  {# display navigation #}
+                    <div class="navigation" style="float:right">
+                    {{ knp_pagination_render(entities) }} 
+                    </div> 
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Autor Original</th>
+                                <th>Propietario</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
         {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('lista_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.nombre }}</td>
-                <td>{{ entity.descripcion }}</td>
-                <td>{{ entity.autorOriginal }}</td>
-                <td>{{ entity.idUsuario }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('lista_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('lista_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
+                            <tr>
+                                <td><a href="{{ path('lista_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                                <td>{{ entity.nombre }}</td>
+                                <td>{{ entity.descripcion }}</td>
+                                <td>{{ entity.autorOriginal }}</td>
+                                <td>{{ entity.nombrePropietario }}</td>
+                                <td>
+                                    <ul>
+                                        <li>
+                                            <a href="{{ path('lista_show', { 'id': entity.id }) }}">detalles</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('lista_edit', { 'id': entity.id }) }}">editar</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('lista_delete', { 'id': entity.id }) }}">borrar</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
         {% endfor %}
-        </tbody>
-    </table>
+                        </tbody>
+                    </table>
+{% else %}
+                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h4>¡No se han encontrado resultados!</h4>
+                    </div>
+                    <p>
+                        <a href="">
+                            <button type="button" class="btn btn-primary btn-lg">Inicio</button>
+                        </a>
+                    </p>
+            {% endif %}
 
+                </div>
+            </div>
+
+        </div>
         <ul>
-        <li>
-            <a href="{{ path('lista_new') }}">
-                Create a new entry
+            <a class="btn btn-primary" href="{{ path('lista_new') }}">
+                Nueva lista
             </a>
-        </li>
-    </ul>
+        </ul>
+        <br>
+    </div>
+</div>    
     {% endblock content%}

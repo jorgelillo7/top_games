@@ -4,28 +4,48 @@
 {% block title %} {{ parent()}} Alta de plataformas a juegos{% endblock title %}
 
 {% block content -%}
-    <h1>Gestión plataformas</h1>
-        
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1>
+                <span class="glyphicon glyphicon-cd" aria-hidden="true"></span> 
+                Juegos: <small>{{juego.titulo}}: gestión de plataformas </small>
+            </h1>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <div class="panel panel-default"> 
+
      {% for plataforma in plataformasAsociadas %}
-        <li> {{plataforma.nombre}}</li>
-        <a href="{{ path("juego_plataformas_borrar", {'idJuego': idJuego, 'idPlataforma': plataforma.id}) }}">
-                      <span class="glyphicon glyphicon-star" aria-hidden="true" title="Añadir Plataforma"></span>
-        </a>
+                    <div style="margin-top: 5px">
+                        <li style="float:left; margin-right: 7px; margin-left: 15px;"> {{plataforma.nombre}}</li>
+                        <a href="{{ path("juego_plataformas_borrar", {'idJuego': idJuego, 'idPlataforma': plataforma.id}) }}">
+                            <span class="glyphicon glyphicon-heart" aria-hidden="true" title="Borrar Plataforma"></span>
+                        </a>
+                    </div>
     {% endfor %}
-    
+
      {% for plataforma in plataformas %}
-        <li> {{plataforma.nombre}}</li>
-        <a href="{{ path("juego_plataformas_nuevo", {'idJuego': idJuego, 'idPlataforma': plataforma.id}) }}">
-                      <span class="glyphicon glyphicon-star-empty" aria-hidden="true" title="Añadir Plataforma"></span>
-        </a>
+                    <div style="margin-top: 5px">
+                        <li style="float:left; margin-right: 7px; margin-left: 15px;"> {{plataforma.nombre}}</li>
+                        <a href="{{ path("juego_plataformas_nuevo", {'idJuego': idJuego, 'idPlataforma': plataforma.id}) }}">
+                            <span class="glyphicon glyphicon-heart-empty" aria-hidden="true" title="Añadir Plataforma"></span>
+                        </a>
+                    </div>
     {% endfor %}
-         
-        
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('juego') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+
+                    <br>
+
+                </div>
+                <ul class="record_actions">
+                    <li>
+                        <a href="{{ path('juego') }}">
+                            Volver a lista de juegos
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

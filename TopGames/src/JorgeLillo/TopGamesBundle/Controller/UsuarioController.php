@@ -4,7 +4,6 @@ namespace JorgeLillo\TopGamesBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use JorgeLillo\TopGamesBundle\Entity\Usuario;
 use JorgeLillo\TopGamesBundle\Form\UsuarioType;
 
@@ -12,20 +11,18 @@ use JorgeLillo\TopGamesBundle\Form\UsuarioType;
  * Usuario controller.
  *
  */
-class UsuarioController extends Controller
-{
+class UsuarioController extends Controller {
 
     /**
      * Lists all Usuario entities.
      *
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         // Verifica si se trata de un@ administrador@
         if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') === false) {
-          throw $this->createAccessDeniedException('¡No dispone de permisos para acceder a esta página!');
+            throw $this->createAccessDeniedException('¡No dispone de permisos para acceder a esta página!');
         }
-        
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('TopGamesBundle:Usuario')->findAll();
@@ -35,12 +32,11 @@ class UsuarioController extends Controller
         ));
     }
 
-  /**
+    /**
      * Creates a new Usuario entity.
      *
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new Usuario();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -54,42 +50,22 @@ class UsuarioController extends Controller
         }
 
         return $this->render('TopGamesBundle:Usuario:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
-    }
-
-    /**
-     * Creates a form to create a Usuario entity.
-     *
-     * @param Usuario $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Usuario $entity)
-    {
-        $form = $this->createForm(new UsuarioType(), $entity, array(
-            'action' => $this->generateUrl('usuario_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Nuevo Usuario'));
-
-        return $form;
     }
 
     /**
      * Displays a form to create a new Usuario entity.
      *
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Usuario();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('TopGamesBundle:Usuario:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -97,8 +73,7 @@ class UsuarioController extends Controller
      * Finds and displays a Usuario entity.
      *
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('TopGamesBundle:Usuario')->find($id);
@@ -110,8 +85,8 @@ class UsuarioController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('TopGamesBundle:Usuario:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -119,8 +94,7 @@ class UsuarioController extends Controller
      * Displays a form to edit an existing Usuario entity.
      *
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('TopGamesBundle:Usuario')->find($id);
@@ -133,36 +107,17 @@ class UsuarioController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('TopGamesBundle:Usuario:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
-    /**
-    * Creates a form to edit a Usuario entity.
-    *
-    * @param Usuario $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Usuario $entity)
-    {
-        $form = $this->createForm(new UsuarioType(), $entity, array(
-            'action' => $this->generateUrl('usuario_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Actualizar'));
-
-        return $form;
-    }
     /**
      * Edits an existing Usuario entity.
      *
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('TopGamesBundle:Usuario')->find($id);
@@ -177,40 +132,76 @@ class UsuarioController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('usuario_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('usuario'));
         }
 
         return $this->render('TopGamesBundle:Usuario:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a Usuario entity.
      *
      */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+    public function deleteAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('TopGamesBundle:Usuario')->find($id);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TopGamesBundle:Usuario')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Usuario entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Usuario entity.');
         }
+
+        $em->remove($entity);
+        $em->flush();
+
 
         return $this->redirect($this->generateUrl('usuario'));
     }
 
+     /*************
+      Private methods
+     *************/
+    
+    /**
+     * Creates a form to create a Usuario entity.
+     *
+     * @param Usuario $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(Usuario $entity) {
+        $form = $this->createForm(new UsuarioType(), $entity, array(
+            'action' => $this->generateUrl('usuario_create'),
+            'method' => 'POST',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Nuevo Usuario'));
+
+        return $form;
+    }
+
+    
+     /**
+     * Creates a form to edit a Usuario entity.
+     *
+     * @param Usuario $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Usuario $entity) {
+        $form = $this->createForm(new UsuarioType(), $entity, array(
+            'action' => $this->generateUrl('usuario_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Actualizar'));
+
+        return $form;
+    }
+    
     /**
      * Creates a form to delete a Usuario entity by id.
      *
@@ -218,13 +209,13 @@ class UsuarioController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('usuario_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Eliminar'))
-            ->getForm()
+                        ->setAction($this->generateUrl('usuario_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Eliminar'))
+                        ->getForm()
         ;
     }
+
 }

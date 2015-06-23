@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Plataforma
  */
-class Plataforma
-{
+class Plataforma {
+
     /**
      * @var integer
      */
@@ -23,20 +23,18 @@ class Plataforma
      * @var string
      */
     private $color;
-    
+
     /**
      * @var boolean
      */
     private $letraBlanca;
-
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -46,8 +44,7 @@ class Plataforma
      * @param string $nombre
      * @return Plataforma
      */
-    public function setNombre($nombre)
-    {
+    public function setNombre($nombre) {
         $this->nombre = $nombre;
 
         return $this;
@@ -58,8 +55,7 @@ class Plataforma
      *
      * @return string 
      */
-    public function getNombre()
-    {
+    public function getNombre() {
         return $this->nombre;
     }
 
@@ -69,8 +65,7 @@ class Plataforma
      * @param string $color
      * @return Plataforma
      */
-    public function setColor($color)
-    {
+    public function setColor($color) {
         $this->color = $color;
 
         return $this;
@@ -81,11 +76,9 @@ class Plataforma
      *
      * @return string 
      */
-    public function getColor()
-    {
+    public function getColor() {
         return $this->color;
     }
-  
 
     /**
      * Set letraBlanca
@@ -93,8 +86,7 @@ class Plataforma
      * @param boolean $letraBlanca
      * @return Plataforma
      */
-    public function setLetraBlanca($letraBlanca)
-    {
+    public function setLetraBlanca($letraBlanca) {
         $this->letraBlanca = $letraBlanca;
 
         return $this;
@@ -105,8 +97,8 @@ class Plataforma
      *
      * @return boolean 
      */
-    public function getLetraBlanca()
-    {
+    public function getLetraBlanca() {
         return $this->letraBlanca;
     }
+
 }

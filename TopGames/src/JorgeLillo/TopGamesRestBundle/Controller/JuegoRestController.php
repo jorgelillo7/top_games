@@ -24,8 +24,7 @@ class JuegoRestController extends FOSRestController {
     public function allAction() {
         $em = $this->getDoctrine()->getManager();
 
-         $entities = $em->getRepository("TopGamesBundle:Juego")->createQueryBuilder('o') 
-                ->setMaxResults(3)
+         $entities = $em->getRepository("TopGamesBundle:Juego")->createQueryBuilder('o')
                 ->getQuery()
                 ->getResult();
         foreach ($entities as $juego) {

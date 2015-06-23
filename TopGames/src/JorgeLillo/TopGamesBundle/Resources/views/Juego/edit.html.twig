@@ -3,17 +3,35 @@
 {% block title %} {{ parent()}} Editar juego{% endblock title %}
 
 {% block content -%}
-    <h1>Juego edit</h1>
- <img src="{{asset(entity.getWebPath)}}" alt="Portada" height="200" width="200" />
-        
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1>
+                <span class="glyphicon glyphicon-cd" aria-hidden="true"></span> 
+                Juegos: <small>editar juego</small>
+            </h1>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <div class="panel panel-default">
+
+                    <img src="{{asset(entity.getWebPath)}}" alt="Portada" height="200" width="200" />
+
     {{ form(edit_form) }}
- 
-        <ul class="record_actions"> 
-    <li>
-        <a href="{{ path('juego') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+                    <br>
+
+                    <ul class="record_actions"> 
+                        <li>
+                            <a href="{{ path('juego') }}">
+                                Volver a lista de juegos
+                            </a>
+                        </li>
+                        <li>{{ form(delete_form) }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock content %}

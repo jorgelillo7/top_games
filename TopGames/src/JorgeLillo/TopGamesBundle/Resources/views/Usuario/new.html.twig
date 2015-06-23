@@ -3,23 +3,22 @@
 {% block title %} {{ parent()}} Alta de usuarios{% endblock title %}
 
 {% block content -%}
-  
-  <div class="container">
+<div class="container">
     <div class="panel panel-default">
-      <div class="panel-heading">
-        <h1>
-            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 
-            Usuarios: <small>Dar de alta un nuevo usuario</small>
-        </h1>
-        <p class="lead">Desde aquí puede añadir un nuevo usuario:</p>
-      </div>
-      <div class="panel-body">
+        <div class="panel-heading">
+            <h1>
+                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 
+                Usuarios: <small>Dar de alta un nuevo usuario</small>
+            </h1>
+            <p class="lead">Desde aquí puede añadir un nuevo usuario:</p>
+        </div>
+        <div class="panel-body">
         {{ form(form) }}
-        
-        <a href="{{ path('usuario') }}">
-            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true">&nbsp;</span>
-        </a>
-      </div>
+
+            <a href="{{ path('usuario') }}">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true">&nbsp;</span>
+            </a>
+        </div>
     </div>
-  </div>
+</div>
 {% endblock content %}

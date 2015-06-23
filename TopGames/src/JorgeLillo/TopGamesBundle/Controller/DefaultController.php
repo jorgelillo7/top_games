@@ -9,16 +9,16 @@ use JorgeLillo\TopGamesBundle\Form\JuegoType;
 class DefaultController extends Controller {
 
     public function indexAction() {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->get('doctrine')->getManager();
         $sql = 'SELECT lista.id '
-                    . 'FROM lista AS lista '
-                    . 'ORDER BY RAND()'
-                    . 'LIMIT 3';
-            $statement = $em->getConnection()->prepare($sql);
-            $statement->execute();
-        $misListasRandomId = $statement->fetchAll(); 
-        
-         $misListasRandom = array();
+                . 'FROM lista AS lista '
+                . 'ORDER BY RAND()'
+                . 'LIMIT 3';
+        $statement = $em->getConnection()->prepare($sql);
+        $statement->execute();
+        $misListasRandomId = $statement->fetchAll();
+
+        $misListasRandom = array();
         foreach ($misListasRandomId as $idLista) {
             $lista = $em->getRepository('TopGamesBundle:Lista')->find($idLista);
             array_push($misListasRandom, $lista);
@@ -33,18 +33,18 @@ class DefaultController extends Controller {
             $statement->execute();
             $juegosAsociadosId = $statement->fetchAll();
 
-            if(count($juegosAsociadosId) >0){
+            if (count($juegosAsociadosId) > 0) {
                 $idRandomGame = $juegosAsociadosId[rand(0, count($juegosAsociadosId) - 1)];
 
-            $juego = $em->getRepository('TopGamesBundle:Juego')->find($idRandomGame);
-            $lista->setJuegoParaHome($juego);
+                $juego = $em->getRepository('TopGamesBundle:Juego')->find($idRandomGame);
+                $lista->setJuegoParaHome($juego);
             }
         }
+        
         return $this->render(
-                        'TopGamesBundle:Default:index.html.twig', array(
+                    'TopGamesBundle:Default:index.html.twig', array(
                     'misListasRandom' => $misListasRandom
-                        )
-        );
+                     ));
     }
 
     public function buscarAction(Request $request) {
@@ -71,6 +71,9 @@ class DefaultController extends Controller {
                     ->setParameter('word', '%' . $search . '%')
                     ->getQuery();
             $entities = $query->getResult();
+            foreach ($entities as $lista) {
+                $lista->setNombrePropietario($this->getNombrePropietario($lista->getId()));
+            }
         }
 
         //Pagination
@@ -78,21 +81,22 @@ class DefaultController extends Controller {
         $pagination = $paginator->paginate(
                 $entities, $request->query->get('page', 1)/* page number */, 10/* limit per page */
         );
+        $pagination->setParam('searchType', $searchType);
+        $pagination->setParam('nombre', $search);
 
         return $this->render(
-                        'TopGamesBundle:Default:searchList.html.twig', array(
+                    'TopGamesBundle:Default:searchList.html.twig', array(
                     'entities' => $pagination,
                     'searchType' => $searchType,
                     'cadena' => $search,
-                        )
-        );
+                     ));
     }
 
-    public function masInfoAction() {
-        return $this->render('TopGamesBundle:Default:masInfo.html.twig');
-    }
-
-    public function getListaPlataformas($id) {
+    /*************
+     Private methods
+     *************/
+    
+    private function getListaPlataformas($id) {
         $em = $this->getDoctrine()->getManager();
         $idJuego = $id;
         $sql = 'SELECT plat.id '
@@ -110,6 +114,14 @@ class DefaultController extends Controller {
         }
 
         return $listaPlataformas;
+    }
+
+    private function getNombrePropietario($id) {
+        $em = $this->getDoctrine()->getManager();
+        $lista = $em->getRepository('TopGamesBundle:Lista')->find($id);
+        $user = $em->getRepository('TopGamesBundle:Usuario')->find($lista->getIdUsuario());
+
+        return $user->getUsername();
     }
 
 }

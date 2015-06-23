@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Lista
  */
-class Lista
-{
+class Lista {
+
     /**
      * @var integer
      */
@@ -33,17 +33,15 @@ class Lista
      * @var integer
      */
     private $idUsuario;
-
-
     public $juegoParaHome;
-     
+    public $nombrePropietario;
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -53,8 +51,7 @@ class Lista
      * @param string $nombre
      * @return Lista
      */
-    public function setNombre($nombre)
-    {
+    public function setNombre($nombre) {
         $this->nombre = $nombre;
 
         return $this;
@@ -65,8 +62,7 @@ class Lista
      *
      * @return string 
      */
-    public function getNombre()
-    {
+    public function getNombre() {
         return $this->nombre;
     }
 
@@ -76,8 +72,7 @@ class Lista
      * @param string $descripcion
      * @return Lista
      */
-    public function setDescripcion($descripcion)
-    {
+    public function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
 
         return $this;
@@ -88,8 +83,7 @@ class Lista
      *
      * @return string 
      */
-    public function getDescripcion()
-    {
+    public function getDescripcion() {
         return $this->descripcion;
     }
 
@@ -99,8 +93,7 @@ class Lista
      * @param string $autorOriginal
      * @return Lista
      */
-    public function setAutorOriginal($autorOriginal)
-    {
+    public function setAutorOriginal($autorOriginal) {
         $this->autorOriginal = $autorOriginal;
 
         return $this;
@@ -111,8 +104,7 @@ class Lista
      *
      * @return string 
      */
-    public function getAutorOriginal()
-    {
+    public function getAutorOriginal() {
         return $this->autorOriginal;
     }
 
@@ -122,8 +114,7 @@ class Lista
      * @param integer $idUsuario
      * @return Lista
      */
-    public function setIdUsuario($idUsuario)
-    {
+    public function setIdUsuario($idUsuario) {
         $this->idUsuario = $idUsuario;
 
         return $this;
@@ -134,14 +125,20 @@ class Lista
      *
      * @return integer 
      */
-    public function getIdUsuario()
-    {
+    public function getIdUsuario() {
         return $this->idUsuario;
     }
-    
+
     public function setJuegoParaHome($juegoParaHome) {
         $this->juegoParaHome = $juegoParaHome;
 
         return $this;
     }
+
+    public function setNombrePropietario($nombrePropietario) {
+        $this->nombrePropietario = $nombrePropietario;
+
+        return $this;
+    }
+
 }

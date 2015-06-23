@@ -1,5 +1,5 @@
 buscar:
     path:     /buscar
     defaults: {_controller: TopGamesBundle:Default:buscar}
-    methods:  [POST]
+    methods:  [GET,POST]
 

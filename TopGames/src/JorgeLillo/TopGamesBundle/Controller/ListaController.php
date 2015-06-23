@@ -18,8 +18,9 @@ class ListaController extends Controller {
      * Lists all Lista entities.
      *
      */
-    public function indexAction() {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
+
         $usuarioId = $this->get('security.context')->getToken()->getUser()->getId();
 
         $repository = $em->getRepository('TopGamesBundle:Lista');
@@ -29,17 +30,38 @@ class ListaController extends Controller {
                 ->getQuery();
         $entities = $query->getResult();
 
+        foreach ($entities as $lista) {
+            $lista->setNombrePropietario($this->getNombrePropietario($lista->getId()));
+        }
+
+        //Pagination
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $entities, $request->query->get('page', 1)/* page number */, 10/* limit per page */
+        );
+
         return $this->render('TopGamesBundle:Lista:index.html.twig', array(
-                    'entities' => $entities,
+                    'entities' => $pagination,
         ));
     }
 
-    public function indexAdminAction() {
+    public function indexAdminAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('TopGamesBundle:Lista')->findAll();
 
+        foreach ($entities as $lista) {
+            $lista->setNombrePropietario($this->getNombrePropietario($lista->getId()));
+        }
+
+        //Pagination
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $entities, $request->query->get('page', 1)/* page number */, 10/* limit per page */
+        );
+
+
         return $this->render('TopGamesBundle:Lista:index.html.twig', array(
-                    'entities' => $entities,
+                    'entities' => $pagination,
         ));
     }
 
@@ -61,31 +83,13 @@ class ListaController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('lista_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('lista'));
         }
 
         return $this->render('TopGamesBundle:Lista:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
-    }
-
-    /**
-     * Creates a form to create a Lista entity.
-     *
-     * @param Lista $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Lista $entity) {
-        $form = $this->createForm(new ListaType(), $entity, array(
-            'action' => $this->generateUrl('lista_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
     }
 
     /**
@@ -107,6 +111,8 @@ class ListaController extends Controller {
      *
      */
     public function showAction($id) {
+        $usuarioId = null;
+        $user;
         $em = $this->getDoctrine()->getManager();
 
         $lista = $em->getRepository('TopGamesBundle:Lista')->find($id);
@@ -136,11 +142,18 @@ class ListaController extends Controller {
 
         $deleteForm = $this->createDeleteForm($id);
 
-         $usuarioId = $this->get('security.context')->getToken()->getUser()->getId();
+        if ($this->get('security.context')->getToken()->getUser() != "anon.") {
+            $usuarioId = $this->get('security.context')->getToken()->getUser()->getId();
+        }
+
+        $user = $em->getRepository('TopGamesBundle:Usuario')->find($lista->getIdUsuario());
+
+
         return $this->render('TopGamesBundle:Lista:show.html.twig', array(
                     'entity' => $lista,
                     'juegosAsociados' => $juegosList,
-                    "userId" => $usuarioId,
+                    'user' => $user,
+                    'userId' => $usuarioId,
                     'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -166,24 +179,6 @@ class ListaController extends Controller {
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
         ));
-    }
-
-    /**
-     * Creates a form to edit a Lista entity.
-     *
-     * @param Lista $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createEditForm(Lista $entity) {
-        $form = $this->createForm(new ListaType(), $entity, array(
-            'action' => $this->generateUrl('lista_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
     }
 
     /**
@@ -221,25 +216,111 @@ class ListaController extends Controller {
      *
      */
     public function deleteAction(Request $request, $id) {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+         $em = $this->getDoctrine()->getManager();
+         $entity = $em->getRepository('TopGamesBundle:Lista')->find($id);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TopGamesBundle:Lista')->find($id);
+         if (!$entity) {
+             throw $this->createNotFoundException('Unable to find Lista entity.');
+         }
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Lista entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
+         $em->remove($entity);
+         $em->flush();
+         
         return $this->redirect($this->generateUrl('lista'));
     }
 
+    public function removeFromListAction($idJuego, $idLista) {
+        $em = $this->getDoctrine()->getManager();
+
+        $repository = $em->getRepository('TopGamesBundle:ListaJuego');
+        $query = $repository->createQueryBuilder('lj')
+                ->where('lj.idJuego = :juego')
+                ->andWhere('lj.idLista = :lista')
+                ->setParameter('juego', $idJuego)
+                ->setParameter('lista', $idLista)
+                ->getQuery();
+        $listaJuego = $query->getSingleResult();
+
+        $em->remove($listaJuego);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('lista_show', array('id' => $idLista)));
+    }
+
+    public function cloneListAction($idList, $idUser) {
+        $em = $this->getDoctrine()->getManager();
+
+        $lista = $em->getRepository('TopGamesBundle:Lista')->find($idList);
+
+        $listaClonada = new Lista();
+        $listaClonada->setNombre($lista->getNombre());
+        $listaClonada->setDescripcion($lista->getDescripcion());
+        $listaClonada->setAutorOriginal($lista->getAutorOriginal());
+        $listaClonada->setIdUsuario($idUser);
+
+        $em->persist($listaClonada);
+        $em->flush();
+
+        $sql = 'SELECT juego.id '
+                . 'FROM juego AS juego '
+                . 'INNER JOIN lista_juego AS lj ON lj.id_juego = juego.id '
+                . 'AND lj.id_lista = ' . $lista->getId();
+        $statement = $em->getConnection()->prepare($sql);
+        $statement->execute();
+        $juegosAsociadosId = $statement->fetchAll();
+
+        foreach ($juegosAsociadosId as $idJuego) {
+            $juegoEnLista = new ListaJuego();
+            $juegoEnLista->setIdJuego($idJuego['id']);
+            $juegoEnLista->setIdLista($listaClonada->getId());
+            $em->persist($juegoEnLista);
+            $em->flush();
+        }
+        return $this->redirect($this->generateUrl('lista_show', array('id' => $listaClonada->getId())));
+    }
+
+    
+    /*************
+      Private methods
+     *************/
+    
     /**
+     * Creates a form to create a Lista entity.
+     *
+     * @param Lista $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(Lista $entity) {
+        $form = $this->createForm(new ListaType(), $entity, array(
+            'action' => $this->generateUrl('lista_create'),
+            'method' => 'POST',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Crear'));
+
+        return $form;
+    }
+    
+    /**
+     * Creates a form to edit a Lista entity.
+     *
+     * @param Lista $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Lista $entity) {
+        $form = $this->createForm(new ListaType(), $entity, array(
+            'action' => $this->generateUrl('lista_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Editar'));
+
+        return $form;
+    }
+    
+     /**
      * Creates a form to delete a Lista entity by id.
      *
      * @param mixed $id The entity id
@@ -250,12 +331,21 @@ class ListaController extends Controller {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('lista_delete', array('id' => $id)))
                         ->setMethod('DELETE')
-                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->add('submit', 'submit', array('label' => 'Eliminar'))
                         ->getForm()
         ;
     }
 
-    public function getListaPlataformas($id) {
+    
+    private function getNombrePropietario($id) {
+        $em = $this->getDoctrine()->getManager();
+        $lista = $em->getRepository('TopGamesBundle:Lista')->find($id);
+        $user = $em->getRepository('TopGamesBundle:Usuario')->find($lista->getIdUsuario());
+
+        return $user->getUsername();
+    }
+
+    private function getListaPlataformas($id) {
         $em = $this->getDoctrine()->getManager();
         $idJuego = $id;
         $sql = 'SELECT plat.id '
@@ -275,54 +365,4 @@ class ListaController extends Controller {
         return $listaPlataformas;
     }
     
-    public function removeFromListAction($idJuego, $idLista){
-         $em = $this->getDoctrine()->getManager();
-            
-            $repository = $em->getRepository('TopGamesBundle:ListaJuego');
-              $query = $repository->createQueryBuilder('lj')
-                ->where('lj.idJuego = :juego')
-                 ->andWhere('lj.idLista = :lista')
-                ->setParameter('juego', $idJuego)
-                ->setParameter('lista', $idLista)
-                ->getQuery();
-            $listaJuego = $query->getSingleResult();
-            
-              $em->remove($listaJuego);
-            $em->flush();
-            
-           return $this->redirect($this->generateUrl('lista_show', array('id' => $idLista)));
-    }
-    
-    public function cloneListAction($idList, $idUser){
-        $em = $this->getDoctrine()->getManager();
-      
-        $lista = $em->getRepository('TopGamesBundle:Lista')->find($idList);
-         
-        $listaClonada = new Lista();
-        $listaClonada->setNombre($lista->getNombre());
-        $listaClonada->setDescripcion($lista->getDescripcion());
-        $listaClonada->setAutorOriginal($lista->getAutorOriginal());
-        $listaClonada->setIdUsuario($idUser);
-        
-        $em->persist($listaClonada);
-        $em->flush();
-        
-        $sql = 'SELECT juego.id '
-                . 'FROM juego AS juego '
-                . 'INNER JOIN lista_juego AS lj ON lj.id_juego = juego.id '
-                . 'AND lj.id_lista = ' . $lista->getId();
-        $statement = $em->getConnection()->prepare($sql);
-        $statement->execute();
-        $juegosAsociadosId = $statement->fetchAll();
-
-        foreach ($juegosAsociadosId as $idJuego) {
-            $juegoEnLista = new ListaJuego();
-            $juegoEnLista->setIdJuego($idJuego['id']);
-            $juegoEnLista->setIdLista($listaClonada->getId());
-        $em->persist($juegoEnLista);
-        $em->flush();
-        }
-         return $this->redirect($this->generateUrl('lista_show', array('id' => $listaClonada->getId())));
-    }
-
 }

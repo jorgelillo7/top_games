@@ -4,15 +4,31 @@
 {% block title %} {{ parent()}} Nueva lista{% endblock title %}
 
 {% block content -%}
-    <h1>Lista creation</h1>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1>
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 
+                Listas: <small>nueva lista</small>
+            </h1>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <div class="panel panel-default">
 
     {{ form(form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('lista') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+                    <ul class="record_actions">
+                        <li>
+                            <a href="{{ path('lista') }}">
+                                Volver a listas
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

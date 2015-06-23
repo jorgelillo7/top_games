@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * JuegoPlataforma
  */
-class JuegoPlataforma
-{
+class JuegoPlataforma {
+
     /**
      * @var integer
      */
@@ -24,14 +24,12 @@ class JuegoPlataforma
      */
     private $idPlataforma;
 
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -41,8 +39,7 @@ class JuegoPlataforma
      * @param integer $idJuego
      * @return JuegoPlataforma
      */
-    public function setIdJuego($idJuego)
-    {
+    public function setIdJuego($idJuego) {
         $this->idJuego = $idJuego;
 
         return $this;
@@ -53,8 +50,7 @@ class JuegoPlataforma
      *
      * @return integer 
      */
-    public function getIdJuego()
-    {
+    public function getIdJuego() {
         return $this->idJuego;
     }
 
@@ -64,8 +60,7 @@ class JuegoPlataforma
      * @param integer $idPlataforma
      * @return JuegoPlataforma
      */
-    public function setIdPlataforma($idPlataforma)
-    {
+    public function setIdPlataforma($idPlataforma) {
         $this->idPlataforma = $idPlataforma;
 
         return $this;
@@ -76,8 +71,8 @@ class JuegoPlataforma
      *
      * @return integer 
      */
-    public function getIdPlataforma()
-    {
+    public function getIdPlataforma() {
         return $this->idPlataforma;
     }
+
 }

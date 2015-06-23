@@ -4,15 +4,31 @@
 {% block title %} {{ parent()}} Alta de usuarios{% endblock title %}
 
 {% block content -%}
-    <h1>Juego creation</h1>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1>
+                <span class="glyphicon glyphicon-cd" aria-hidden="true"></span> 
+                Juegos: <small>nuevo juego</small>
+            </h1>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <div class="panel panel-default">
+                    <br>
+                    {{ form(form) }}
+                    <br>
+                    <ul class="record_actions">
+                        <li>
+                            <a href="{{ path('juego') }}">
+                                Volver a lista de juegos
+                            </a>
+                        </li>
+                    </ul>
 
-    {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('juego') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
