@@ -17,10 +17,10 @@
           {% if (entities|length) > 0 %}
               {# Hay usuarios #}
                 <div class="panel panel-default">
-                  {# display navigation #}
-                    <div class="count">
-    {{ entities.getTotalItemCount }}
-                    </div>
+                 {# display navigation #}
+                    <div class="navigation" style="float:right">
+                    {{ knp_pagination_render(entities) }} 
+                    </div> 
                     <table class="table table-striped table-condensed">
                         <thead>
 
