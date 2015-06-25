@@ -48,6 +48,8 @@
                     <li><b style="border-radius: 4px; background-color: {{ plataforma.color }}">{{ plataforma.nombre }}</b></li>
                         {% endif %}
                 {% endfor %}
+                        <a href="{{ path('juego_plataformas', { 'id': entity.id }) }}">gestión de plataformas</a>
+                              
                     </td>
                     </tr>
 
