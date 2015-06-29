@@ -95,7 +95,9 @@
                     </td>
                     <td>
                        {% if userId !=  null %}
-                        <a href="{{ path('lista_juego_remove', { 'idJuego': juego.id ,'idLista': entity.id}) }}">eliminar juego</a>
+                           {% if (entity.idUsuario ==  userId) or (is_granted('ROLE_ADMIN')) %}
+                            <a href="{{ path('lista_juego_remove', { 'idJuego': juego.id ,'idLista': entity.id}) }}">eliminar juego</a>
+                           {% endif %}
                        {% endif %}
                     </td>
                     </tr>
