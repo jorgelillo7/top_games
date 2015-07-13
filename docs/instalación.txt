@@ -1,0 +1,3 @@
+- importar a Netbeans proyecto.
+- Composer -> Install (Cuidado con rutas muy largas, se recomienda copiarlo en C:/ )
+- Importar base de datos desde el archivo sql: top_games (2015-06-30).sql
